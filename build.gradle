@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+group 'mdpgrp25'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.0-RC2'
+    implementation 'io.reactivex:rxswing:0.27.0'
+    compile group: 'io.projectreactor', name: 'reactor-core', version: '3.2.12.RELEASE'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.0.pr3'
+}
