@@ -56,4 +56,12 @@ public class ArenaCellCoordinate {
         return this;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ArenaCellCoordinate){
+            ArenaCellCoordinate compare = (ArenaCellCoordinate) obj;
+            return this.x == compare.x && this.y == compare.y;
+        }
+        return false;
+    }
 }

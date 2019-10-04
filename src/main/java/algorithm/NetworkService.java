@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import networkmanager.NetworkManager;
 import networkmanager.NetworkRecipient;
 import networkmanager.NetworkSubscriber;
-import networkmanager.dto.ActionDataPacket;
-import networkmanager.dto.ControlSignalPacket;
-import networkmanager.dto.Packet;
-import networkmanager.dto.SensorInfoPacket;
+import networkmanager.dto.*;
 
 public class NetworkService implements NetworkSubscriber {
     private NetworkManager networkManager;
@@ -54,6 +51,14 @@ public class NetworkService implements NetworkSubscriber {
         }
         catch (IllegalArgumentException e){
             System.out.println("Drop packet for robot signal");
+        }
+
+        try{
+            WayPointPacket wayPointPacket = mapper.convertValue(packet.getData(), WayPointPacket.class);
+            algorithmManager.onWaypoint(wayPointPacket);
+        }
+        catch (IllegalArgumentException e){
+            System.out.println("Drop packet for waypoint signal");
         }
     }
 }

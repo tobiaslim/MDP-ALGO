@@ -1,6 +1,8 @@
 package algorithm;
 
+import algorithm.constants.Direction;
 import algorithm.contracts.AlgorithmContract;
+import algorithm.models.ArenaCellCoordinate;
 import algorithm.models.RobotModel;
 
 public class ExplorationAlgorithm implements AlgorithmContract {
@@ -8,12 +10,20 @@ public class ExplorationAlgorithm implements AlgorithmContract {
     ArenaMemory arenaMemory;
     boolean resume;
     boolean wallOnRight = false;
+    boolean subGoalAchieved = false;
+    ArenaCellCoordinate goal;
+    ArenaCellCoordinate subgoal;
+    ArenaCellCoordinate start;
 
     public ExplorationAlgorithm(RobotModel robotModel, ArenaMemory arenaMemory){
         this.robotModel = robotModel;
         this.arenaMemory = arenaMemory;
         this.resume = true;
         arenaMemory.setStartZoneAsExplored();
+
+        start =  new ArenaCellCoordinate(1, 1);
+        subgoal = new ArenaCellCoordinate(13, 18);
+        goal = new ArenaCellCoordinate(1, 1);
     }
 
     @Override
@@ -21,7 +31,13 @@ public class ExplorationAlgorithm implements AlgorithmContract {
         robotModel.startRobot();
         robotModel.waitForReadyState();
 
-        while (true && canPlay()){
+        while (!isGoalAchieved() && canPlay()){
+
+            if(!subGoalAchieved){
+                //use to detect if robot has passed the goal zone
+                subGoalAchieved = robotModel.getRobotCenter().equals(subgoal);
+            }
+
             boolean frontEmpty = robotModel.robotFrontSideEmpty();
             boolean rightEmpty = robotModel.robotRightSideEmpty();
             if(rightEmpty){
@@ -43,19 +59,21 @@ public class ExplorationAlgorithm implements AlgorithmContract {
                 }
             }
             try{
-                Thread.sleep(500);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             robotModel.waitForReadyState();
         }
+        setBackToNorth();
+        System.out.println("Goal achieved!");
     }
 
     public void turnRightMoveOne(){
         robotModel.turnRight();
         robotModel.waitForReadyState();
         try {
-            Thread.sleep(500);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -64,8 +82,29 @@ public class ExplorationAlgorithm implements AlgorithmContract {
         }
     }
 
+    public void setBackToNorth(){
+        while(robotModel.getCurrentDirection() != Direction.NORTH){
+            if(robotModel.getCurrentDirection().getValue() > 2){
+                robotModel.turnRight();
+            }
+            else{
+                robotModel.turnLeft();
+            }
+            robotModel.waitForReadyState();
+        }
+    }
 
-    public synchronized  void pauseAlgorithm(){
+
+    /**
+     * Check if robot has achieved subgoal and return back to original starting position
+     * @return
+     */
+    public boolean isGoalAchieved(){
+        return robotModel.getRobotCenter().equals(goal) && subGoalAchieved;
+    }
+
+
+    public synchronized void pauseAlgorithm(){
         this.resume = false;
         notifyAll();
     }

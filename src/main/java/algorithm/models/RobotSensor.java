@@ -59,90 +59,8 @@ public class RobotSensor {
         }
     }
 
-    public void sense(int sensorValue) {
-        sensorValue = sensorValue - offset;
-        /**
-         * Possible scenarios:
-         * x is lower safe, y is upper safe
-         * 1. Sensor values goes above the upper safe range (y+1 ~ infty)
-         * 2. Sensor value between lower and upper safe range (x ~ y)
-         * 3. Sensor value below the lower safe range (0 ~ x)
-         *
-         * Case 1: Make the assured range to be empty as empty.
-         * Case 2: Make the block
-         */
-        if(sensorValue > maxRange){
-            // crazy values, but assured x grid in front of sensor is empty(safeRange)
-
-            ArenaCellCoordinate currentSensorCoordinate = getTheCurrentCoordinateOfSensor();
-            Direction facingDirection = currentFacingDirection();
-
-            Matrix directionMatrix = getDirectionMatrix(facingDirection);
-
-            List<Pair<ArenaCellCoordinate, ArenaCellType>> results = new ArrayList<>();
-            int gridOffset = offset/interval;
-            for(int i = gridOffset; i < noOfSafeZone; i++){
-                Matrix offset = new Matrix(directionMatrix, i);
-                ArenaCellCoordinate cell;
-
-                try{
-                    cell = new ArenaCellCoordinate(currentSensorCoordinate, offset);
-                }
-                catch (OutOfGridException e){
-                    cell = null;
-                }
-
-                Pair<ArenaCellCoordinate, ArenaCellType> row = new Pair<>();
-                row.setT(cell);
-                row.setV(ArenaCellType.EMPTY);
-                results.add(row);
-            }
-            robotModel.sensorUpdateCallBack(results);
-        }
-        else{
-            int noOfGridAhead = (sensorValue / interval);
-            //Logic to detect where is the block
-            //1. find sensor current coordinate
-            //2. find sensor current facing direction
-            //3. Based on sensor facing direction, get the matrix for the direction
-            //4. multiply noOfGridAhead with matrix. Result matrix is the x and y distance from the sensor detecting
-            //5. Add current sensor coordinate with the difference to get where the detected block is at
-            ArenaCellCoordinate currentSensorCoordinate = getTheCurrentCoordinateOfSensor();
-            Direction facingDirection = currentFacingDirection();
-
-            Matrix directionMatrix = getDirectionMatrix(facingDirection);
-
-            List<Pair<ArenaCellCoordinate, ArenaCellType>> results = new ArrayList<>();
-            int gridOffset = offset/interval;
-            for(int i = gridOffset; i <= noOfGridAhead; i++){
-                Matrix offset = new Matrix(directionMatrix, i);
-                ArenaCellCoordinate cell;
-                try{
-                    cell = new ArenaCellCoordinate(currentSensorCoordinate, offset);
-                }
-                catch (OutOfGridException e){
-                    // this case happens when the grid detected is a wall
-                    cell = null;
-                }
-
-
-                Pair<ArenaCellCoordinate, ArenaCellType> row = new Pair<>();
-                row.setT(cell);
-                if(noOfGridAhead == i){
-                    row.setV(ArenaCellType.BLOCK);
-                }
-                else{
-                    row.setV(ArenaCellType.EMPTY);
-                }
-                results.add(row);
-            }
-
-
-            robotModel.sensorUpdateCallBack(results);
-        }
-    }
-
-    public void sensev2(int sensorValue){
+    public void sense(int sensorValue){
+        System.out.printf("***** Start of %s *****\n", placement.toString());
         List<Pair<ArenaCellCoordinate, ArenaCellType>> results = new ArrayList<>();
 
         Zone zone = null;
@@ -171,6 +89,8 @@ public class RobotSensor {
         Direction facingDirection = currentFacingDirection();
         Matrix directionMatrix = getDirectionMatrix(facingDirection);
         Matrix sumMatrix;
+
+        //populating the coordinates that need to be mapped.
         for(int i = 0; i < noOfGrids; i++){
             sumMatrix = new Matrix(directionMatrix,i);
             ArenaCellCoordinate acc;
@@ -184,7 +104,7 @@ public class RobotSensor {
             Pair<ArenaCellCoordinate, ArenaCellType> p = new Pair<ArenaCellCoordinate, ArenaCellType>();
             p.setT(acc);
             if((i+1) == noOfGrids && zone != null){
-                System.out.printf("Robot Sensor: Setting x: %d y: %d as block\n", acc.getX(), acc.getY());
+//                System.out.printf("Robot Sensor %s: Setting x: %d y: %d as block\n", placement.toString(),acc.getX(), acc.getY());
                 p.setV(ArenaCellType.BLOCK);
             }
             else{
@@ -193,6 +113,7 @@ public class RobotSensor {
             results.add(p);
         }
         robotModel.sensorUpdateCallBack(results);
+        System.out.printf("***** End of %s*****\n", placement.toString());
     }
 
 

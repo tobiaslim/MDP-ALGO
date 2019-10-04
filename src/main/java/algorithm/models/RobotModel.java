@@ -250,23 +250,15 @@ public class RobotModel{
      * @param sensorInfoPacket
      */
     public void updateMap(SensorInfoPacket sensorInfoPacket){
-        if(mode == Mode.REAL_RUN){
-            sensors.get(RobotSensorPlacement.FRONT_CENTER).sense(sensorInfoPacket.getFC());
-            sensors.get(RobotSensorPlacement.FRONT_LEFT).sense(sensorInfoPacket.getFL());
-            sensors.get(RobotSensorPlacement.FRONT_RIGHT).sense(sensorInfoPacket.getFR());
-            sensors.get(RobotSensorPlacement.RIGHT_TOP).sense(sensorInfoPacket.getRT());
-            sensors.get(RobotSensorPlacement.RIGHT_BOTTOM).sense(sensorInfoPacket.getRB());
-            setRobotState(RobotState.READY);
-        }
-        else{
-            sensors.get(RobotSensorPlacement.FRONT_CENTER).sensev2(sensorInfoPacket.getFC());
-            sensors.get(RobotSensorPlacement.FRONT_LEFT).sensev2(sensorInfoPacket.getFL());
-            sensors.get(RobotSensorPlacement.FRONT_RIGHT).sensev2(sensorInfoPacket.getFR());
-            sensors.get(RobotSensorPlacement.RIGHT_TOP).sensev2(sensorInfoPacket.getRT());
-            sensors.get(RobotSensorPlacement.RIGHT_BOTTOM).sensev2(sensorInfoPacket.getRB());
-            sensors.get(RobotSensorPlacement.LEFT_MIDDLE).sensev2(sensorInfoPacket.getLM());
-            setRobotState(RobotState.READY);
-        }
+        System.out.println("\n---------------------- Start of values Mapping------------------------");
+        System.out.printf("Current Robot position: x: %d, y: %d \n", robotCenter.getX(), robotCenter.getY());
+        sensors.get(RobotSensorPlacement.FRONT_CENTER).sense(sensorInfoPacket.getFC());
+        sensors.get(RobotSensorPlacement.FRONT_LEFT).sense(sensorInfoPacket.getFL());
+        sensors.get(RobotSensorPlacement.FRONT_RIGHT).sense(sensorInfoPacket.getFR());
+        sensors.get(RobotSensorPlacement.RIGHT_TOP).sense(sensorInfoPacket.getRT());
+        sensors.get(RobotSensorPlacement.RIGHT_BOTTOM).sense(sensorInfoPacket.getRB());
+        System.out.println("---------------------- End of values Mapping------------------------\n");
+        setRobotState(RobotState.READY);
     }
 
 
@@ -283,12 +275,12 @@ public class RobotModel{
                 continue;
             }
             if(row.getV() == ArenaCellType.BLOCK){
-//                System.out.printf("Coord x: %d y:%d is a block!\n", row.getT().getX(), row.getT().getY());
+                System.out.printf("Coord x: %d y:%d is a block!\n", row.getT().getX(), row.getT().getY());
                 explored.setCellAsBlock(row.getT());
             }
             else if(row.getV() == ArenaCellType.EMPTY){
                 if(explored.getCellModelByCoordinates(row.getT()).getCellType() != ArenaCellType.BLOCK){
-//                    System.out.printf("Coord x: %d y:%d is not a block!\n", row.getT().getX(), row.getT().getY());
+                    System.out.printf("Coord x: %d y:%d is not a block!\n", row.getT().getX(), row.getT().getY());
                     explored.setCellAsEmpty(row.getT());
                 }
 

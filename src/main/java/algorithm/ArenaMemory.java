@@ -209,5 +209,9 @@ public class ArenaMemory implements MDFFormattable {
         return MDFFormatterUtility.convertBinaryStringToHexString(mdf);
     }
 
+    public long getNoOfExploredCells(){
+        return cells.stream().filter(acm->acm.getCellStatus() == ArenaCellStatus.EXPLORED).count();
+    }
+
 
 }

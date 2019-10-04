@@ -30,13 +30,14 @@ public class Controls {
         pauseResume.setEnabled(false);
         pauseResume.addItemListener(toggleAlgo());
         controlPanel.add(pauseResume);
+        pauseResume.setEnabled(true);
     }
 
     public ActionListener startAlgo(){
         ActionListener a = e->{
             startButton.setEnabled(false);
-            pauseResume.setEnabled(true);
-            algorithmManager.startAlgo();
+//            pauseResume.setEnabled(true);
+            algorithmManager.startExplorationAlgorithm();
         };
         return a;
     }

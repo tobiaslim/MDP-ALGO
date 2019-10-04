@@ -226,27 +226,26 @@ public class TestServer extends Thread{
      * @return
      */
     public SensorValueMapping getSensorValueMapping(RobotSensorPlacement placement,ArenaCellCoordinate sensorCoordinate, Matrix directionMatrix){
-
         Map<Zone, SensorValueMapping> reference = sensorPlacementSensorValueMapping.get(placement);
         for(int i = 0; i  < Zone.values().length; i++){
             try{
                 sensorCoordinate.addMatrixValue(directionMatrix);
             }catch (OutOfGridException e){
                 //out of grid, return current zone
-                System.out.print(placement.toString() + " detected out of grid assigning latest zone");
+//                System.out.print(placement.toString() + " detected out of grid assigning latest zone");
                 Zone zone = Zone.value(i+1);
                 if(zone == null){
                     //out of grid and zone not registered for this sensor
                     return null;
                 }
-                System.out.println(", assingning zone" +zone.toString() );
+//                System.out.println(", assingning zone" +zone.toString() );
                 SensorValueMapping svm = reference.get(zone);
                 return svm;
 
             }
 
             if(simulated.getCellModelByCoordinates(sensorCoordinate).getCellType() == ArenaCellType.BLOCK){
-                System.out.println(placement.toString() + " detected block at " + sensorCoordinate.getX() + " " + sensorCoordinate.getY());
+//                System.out.println(placement.toString() + " detected block at " + sensorCoordinate.getX() + " " + sensorCoordinate.getY());
                 Zone zone = Zone.value(i+1);
                 if(zone == null){
                     return null;
@@ -368,7 +367,7 @@ public class TestServer extends Thread{
         ArenaCellCoordinate acc = new ArenaCellCoordinate(0, 0);
         switch (currentDirection){
             case NORTH:
-                acc = new ArenaCellCoordinate(coordinate.getX() - 1, acc.getY()+1);
+                acc = new ArenaCellCoordinate(coordinate.getX() - 1, coordinate.getY()+1);
                 break;
             case EAST:
                 acc = new ArenaCellCoordinate(coordinate.getX() + 1, coordinate.getY() + 1);
@@ -421,7 +420,7 @@ public class TestServer extends Thread{
         return acc;
     }
 
-
+    @Deprecated
     private ArenaCellCoordinate getRightTopSensor(ArenaCellCoordinate coordinate){
         ArenaCellCoordinate acc = new ArenaCellCoordinate(0, 0);
         switch (currentDirection){

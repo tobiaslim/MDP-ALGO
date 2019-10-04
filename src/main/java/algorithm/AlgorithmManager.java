@@ -1,13 +1,17 @@
 package algorithm;
 
 import algorithm.constants.RobotAction;
+import algorithm.constants.RobotState;
+import algorithm.contracts.AlgorithmContract;
 import algorithm.contracts.RobotSubscriber;
+import algorithm.models.ArenaCellCoordinate;
 import algorithm.models.MDFFormat;
 import algorithm.models.RobotModel;
 import networkmanager.NetworkManager;
 import networkmanager.NetworkRecipient;
 import networkmanager.dto.ControlSignalPacket;
 import networkmanager.dto.SensorInfoPacket;
+import networkmanager.dto.WayPointPacket;
 import simulator.Mode;
 
 import java.util.HashMap;
@@ -17,9 +21,10 @@ public class AlgorithmManager implements RobotSubscriber {
     private ArenaMemory exploredArenaMemory;
     private Mode mode;
     private RobotModel robotModel;
-    private ExplorationAlgorithm explorationAlgorithm;
+    private AlgorithmContract currentAlgo;
     private NetworkService networkService;
-    private Thread currentExecutingAlgorithm;
+    private Thread algoThread;
+    private ArenaCellCoordinate waypoint;
 
 
     public AlgorithmManager(Mode mode, NetworkManager networkManager){
@@ -28,22 +33,49 @@ public class AlgorithmManager implements RobotSubscriber {
         this.exploredArenaMemory = new ArenaMemory();
         this.robotModel = new RobotModel(networkService, exploredArenaMemory, mode);
         exploredArenaMemory.setStartZoneAndGoalZone();
-        this.explorationAlgorithm = new ExplorationAlgorithm(robotModel, exploredArenaMemory);
+
         robotModel.subscribe(this);
     }
 
-    public void startAlgo(){
-        currentExecutingAlgorithm = new Thread(this.explorationAlgorithm);
-        currentExecutingAlgorithm.setName("Algorithm Runnable");
-        currentExecutingAlgorithm.start();
+    public void startExplorationAlgorithm(){
+       Runnable r = new Runnable() {
+           @Override
+           public void run() {
+               while (true){
+                   try {
+                       Thread.sleep(5000);
+                   } catch (InterruptedException e) {
+                       e.printStackTrace();
+                   }
+                   networkService.sendActionToArduino(RobotAction.START);
+                   robotModel.setRobotState(RobotState.WAITING);
+                   robotModel.waitForReadyState();
+
+               }
+           }
+       };
+       Thread t = new Thread(r);
+       t.start();
+
+
+//        this.currentAlgo = new ExplorationAlgorithm(robotModel, exploredArenaMemory);
+//        algoThread = new Thread(currentAlgo);
+//        algoThread.setName("exploration runnable");
+//        algoThread.start();
+    }
+
+    public void startFastestPathAlgorithm(){
+        algoThread = new Thread(new FastestPathAlgorithm());
+        algoThread.setName("fastest path runnable");
+        algoThread.start();
     }
 
     public void pauseAlgo(){
-        explorationAlgorithm.pauseAlgorithm();
+        currentAlgo.pauseAlgorithm();
     }
 
     public void resumeAlgo(){
-        explorationAlgorithm.resumeAlgorithm();
+        currentAlgo.resumeAlgorithm();
     }
 
     public ArenaMemory getExploredArenaMemory() {
@@ -71,10 +103,14 @@ public class AlgorithmManager implements RobotSubscriber {
 
     public void onControlSignal(ControlSignalPacket controlSignalPacket){
         if(controlSignalPacket.getAction() == ControlSignalPacket.RobotSignal.START_EXPLORE){
-            startAlgo();
+            startExplorationAlgorithm();
         }
         else{
-//            System.out.println("unknown signal");
+            startFastestPathAlgorithm();
         }
+    }
+
+    public void onWaypoint(WayPointPacket wayPointPacket){
+        this.waypoint = new ArenaCellCoordinate(wayPointPacket.getX(), wayPointPacket.getY());
     }
 }
