@@ -56,7 +56,6 @@ public class ArenaMemory implements MDFFormattable {
     /**
      * Set surrounding as virtual walls. Should be called first.
      */
-    @Deprecated
     public void setSurroundingAsVirtualWalls(){
         // set bottom and top surrounding
         for(int i = 0; i < Arena.NO_OF_COLUMNS; i++){

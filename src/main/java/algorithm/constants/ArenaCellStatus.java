@@ -1,7 +1,7 @@
 package algorithm.constants;
 
 public enum ArenaCellStatus{
-    EXPLORED(1), UNEXPLORED(0), UNSURE(2);
+    EXPLORED(1), UNEXPLORED(0);
 
     private final int value;
 

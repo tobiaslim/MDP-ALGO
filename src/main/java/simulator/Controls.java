@@ -11,7 +11,7 @@ import java.awt.event.ItemListener;
 
 public class Controls {
     JPanel controlPanel;
-    JButton startButton;
+    JButton startButton, fastestPathButton;
     JToggleButton pauseResume;
     AlgorithmManager algorithmManager;
 
@@ -25,12 +25,23 @@ public class Controls {
         controlPanel.add(startButton);
         startButton.addActionListener(startAlgo());
 
+        fastestPathButton = new JButton("Start fastest");
+        controlPanel.add(fastestPathButton);
+        fastestPathButton.addActionListener(starFastestPath());
+
 
         pauseResume = new JToggleButton("Pause");
         pauseResume.setEnabled(false);
         pauseResume.addItemListener(toggleAlgo());
         controlPanel.add(pauseResume);
         pauseResume.setEnabled(true);
+    }
+
+    private ActionListener starFastestPath() {
+        ActionListener a = e->{
+            algorithmManager.startFastestPathAlgorithm();
+        };
+        return a;
     }
 
     public ActionListener startAlgo(){
