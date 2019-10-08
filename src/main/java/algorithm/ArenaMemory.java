@@ -212,5 +212,16 @@ public class ArenaMemory implements MDFFormattable {
         return cells.stream().filter(acm->acm.getCellStatus() == ArenaCellStatus.EXPLORED).count();
     }
 
+    public List<ArenaCellModel> getAllObstacleCells(){
+        return cells.stream().filter(acm->acm.getCellType() == ArenaCellType.BLOCK).collect(Collectors.toList());
+    }
+
+    public List<ArenaCellModel> getAllExploredAndEmpty(){
+        return cells.stream().filter(acm-> !acm.isVirtualWall() &&
+                acm.getCellStatus() == ArenaCellStatus.EXPLORED &&
+                (acm.getCellType() == ArenaCellType.EMPTY ||
+                acm.getCellType() == ArenaCellType.START_ZONE ||
+                acm.getCellType() == ArenaCellType.END_ZONE)).collect(Collectors.toList());
+    }
 
 }

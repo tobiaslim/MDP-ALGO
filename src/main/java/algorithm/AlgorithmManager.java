@@ -1,7 +1,6 @@
 package algorithm;
 
 import algorithm.constants.RobotAction;
-import algorithm.constants.RobotState;
 import algorithm.contracts.AlgorithmContract;
 import algorithm.contracts.RobotSubscriber;
 import algorithm.models.ArenaCellCoordinate;
@@ -33,35 +32,15 @@ public class AlgorithmManager implements RobotSubscriber {
         this.exploredArenaMemory = new ArenaMemory();
         this.robotModel = new RobotModel(networkService, exploredArenaMemory, mode);
         exploredArenaMemory.setStartZoneAndGoalZone();
-
         robotModel.subscribe(this);
     }
 
     public void startExplorationAlgorithm(){
-       Runnable r = new Runnable() {
-           @Override
-           public void run() {
-               while (true){
-                   try {
-                       Thread.sleep(5000);
-                   } catch (InterruptedException e) {
-                       e.printStackTrace();
-                   }
-                   networkService.sendActionToArduino(RobotAction.START);
-                   robotModel.setRobotState(RobotState.WAITING);
-                   robotModel.waitForReadyState();
-
-               }
-           }
-       };
-       Thread t = new Thread(r);
-       t.start();
-
-
-//        this.currentAlgo = new ExplorationAlgorithm(robotModel, exploredArenaMemory);
-//        algoThread = new Thread(currentAlgo);
-//        algoThread.setName("exploration runnable");
-//        algoThread.start();
+        this.currentAlgo = new ExplorationAlgorithm(robotModel, exploredArenaMemory);
+        exploredArenaMemory.setSurroundingAsVirtualWalls();
+        algoThread = new Thread(currentAlgo);
+        algoThread.setName("exploration runnable");
+        algoThread.start();
     }
 
     public void startFastestPathAlgorithm(){
