@@ -21,7 +21,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
         this.resume = true;
 
         start =  new ArenaCellCoordinate(1, 1);
-        goal = new ArenaCellCoordinate(13, 18);
+        goal = new ArenaCellCoordinate(7, 11);
     }
 
     @Override
@@ -53,11 +53,15 @@ public class FastestPathAlgorithm implements AlgorithmContract {
         // Set edges as Virtual Cells. Blocked.
         for(int i=0;i<15;i++){
             aStar.setBlock(0,i);
+            System.out.println("Side Block set at "+0+", "+i);
             aStar.setBlock(19,i);
+            System.out.println("Side Block set at "+19+", "+i);
         }
         for(int i=1;i<19;i++){
             aStar.setBlock(i,0);
+            System.out.println("Side Block set at "+i+", "+0);
             aStar.setBlock(i,14);
+            System.out.println("Side Block set at "+i+", "+14);
         }
 
         // Set unexplored cells as blocked
@@ -85,29 +89,76 @@ public class FastestPathAlgorithm implements AlgorithmContract {
         int curY = 1;
         for(Node node : path){
             // same row
-            if(node.getRow()==curX){
-                if(node.getCol()-curY==1){
-                    robotModel.moveFrontOneStep();
+            if(node.getRow()==curY){
+                if(node.getCol()-curX==1){
+                    try{
+                        Thread.sleep(1000);
+                    }
+                    catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                    robotModel.moveEast();
+                    robotModel.waitForReadyState();
+                }
+                else if (node.getCol()+curX==1){
+                    try{
+                        Thread.sleep(1000);
+                    }
+                    catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                    robotModel.moveWest();
+                    robotModel.waitForReadyState();
                 }
             }
             // same column
-            if(node.getCol()==curY){
-                if(node.getRow()-curX==1){
-                    robotModel.moveEast();
-                }
-                else if (node.getRow()+curX==1){
-                    robotModel.moveWest();
+            if(node.getCol()==curX){
+                if(node.getRow()-curY==1){
+                    try{
+                        Thread.sleep(1000);
+                    }
+                    catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                    robotModel.moveNorth();
+                    robotModel.waitForReadyState();
                 }
             }
             // up right diagonal
             if(node.getCol()-1==curX && node.getRow()==curY){
-                robotModel.moveFrontOneStep();
+                try{
+                    Thread.sleep(1000);
+                }
+                catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+                robotModel.moveNorth();
+                try{
+                    Thread.sleep(1000);
+                }
+                catch (InterruptedException e){
+                    e.printStackTrace();
+                }
                 robotModel.moveEast();
+                try{
+                    Thread.sleep(1000);
+                }
+                catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+                robotModel.waitForReadyState();
             }
             // up left diagonal
             if(node.getCol()+1==curX && node.getRow()==curY){
-                robotModel.moveFrontOneStep();
+                try{
+                    Thread.sleep(1000);
+                }
+                catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+                robotModel.moveNorth();
                 robotModel.moveWest();
+                robotModel.waitForReadyState();
             }
             curX = node.getCol();
             curY = node.getRow();
