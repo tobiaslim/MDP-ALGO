@@ -87,64 +87,50 @@ public class RobotModel{
         }
         else{
             //TODO sensors declaration for actual run
-//            sensors.put(RobotSensorPlacement.FRONT_CENTER,
-//                    new RobotSensor(this, RobotSensorPlacement.FRONT_CENTER, 0, 10, 10, 1));
-//
-//            sensors.put(RobotSensorPlacement.FRONT_LEFT,
-//                    new RobotSensor(this, RobotSensorPlacement.FRONT_LEFT, 0, 10, 10, 1));
-//
-//            sensors.put(RobotSensorPlacement.FRONT_RIGHT,
-//                    new RobotSensor(this, RobotSensorPlacement.FRONT_RIGHT, 0, 10, 10, 1));
-//
-//            sensors.put(RobotSensorPlacement.RIGHT_TOP,
-//                    new RobotSensor(this, RobotSensorPlacement.RIGHT_TOP, 0, 10, 10, 1));
-//
-//            sensors.put(RobotSensorPlacement.RIGHT_BOTTOM,
-//                    new RobotSensor(this, RobotSensorPlacement.RIGHT_BOTTOM,0, 10, 10, 1));
             Map<Zone, SensorValueMapping> flv = new HashMap<>();
             flv.put(Zone.A, new SensorValueMapping(Zone.A, FRONT_LEFT_A_START,FRONT_LEFT_A_END));
-            flv.put(Zone.B, new SensorValueMapping(Zone.B, FRONT_LEFT_B_START,FRONT_LEFT_B_END));
-            flv.put(Zone.C, new SensorValueMapping(Zone.C, FRONT_LEFT_C_START,FRONT_LEFT_C_END));
+//            flv.put(Zone.B, new SensorValueMapping(Zone.B, FRONT_LEFT_B_START,FRONT_LEFT_B_END));
+//            flv.put(Zone.C, new SensorValueMapping(Zone.C, FRONT_LEFT_C_START,FRONT_LEFT_C_END));
             RobotSensor fl = new RobotSensor(flv, this, RobotSensorPlacement.FRONT_LEFT);
             sensors.put(RobotSensorPlacement.FRONT_LEFT,fl);
 
             Map<Zone,SensorValueMapping> fcv = new HashMap<>();
             fcv.put(Zone.A, new SensorValueMapping(Zone.A, FRONT_CENTER_A_START ,FRONT_CENTER_A_END));
-            fcv.put(Zone.B, new SensorValueMapping(Zone.B, FRONT_CENTER_B_START ,FRONT_CENTER_B_END));
-            fcv.put(Zone.C, new SensorValueMapping(Zone.C, FRONT_CENTER_C_START,FRONT_CENTER_C_END));
+//            fcv.put(Zone.B, new SensorValueMapping(Zone.B, FRONT_CENTER_B_START ,FRONT_CENTER_B_END));
+//            fcv.put(Zone.C, new SensorValueMapping(Zone.C, FRONT_CENTER_C_START,FRONT_CENTER_C_END));
             RobotSensor fc = new RobotSensor(fcv, this, RobotSensorPlacement.FRONT_CENTER);
             sensors.put(RobotSensorPlacement.FRONT_CENTER, fc);
 
             Map<Zone,SensorValueMapping> frv = new HashMap<>();
             frv.put(Zone.A, new SensorValueMapping(Zone.A, FRONT_RIGHT_A_START ,FRONT_RIGHT_A_END));
-            frv.put(Zone.B, new SensorValueMapping(Zone.B, FRONT_RIGHT_B_START ,FRONT_RIGHT_B_END));
-            frv.put(Zone.C, new SensorValueMapping(Zone.C, FRONT_RIGHT_C_START ,FRONT_RIGHT_C_END));
+//            frv.put(Zone.B, new SensorValueMapping(Zone.B, FRONT_RIGHT_B_START ,FRONT_RIGHT_B_END));
+//            frv.put(Zone.C, new SensorValueMapping(Zone.C, FRONT_RIGHT_C_START ,FRONT_RIGHT_C_END));
             RobotSensor fr = new RobotSensor(frv, this, RobotSensorPlacement.FRONT_RIGHT);
             sensors.put(RobotSensorPlacement.FRONT_RIGHT, fr);
 
             Map<Zone,SensorValueMapping> rtv = new HashMap<>();
             rtv.put(Zone.A, new SensorValueMapping(Zone.A, RIGHT_TOP_A_START ,RIGHT_TOP_A_END));
-            rtv.put(Zone.B, new SensorValueMapping(Zone.B, RIGHT_TOP_B_START ,RIGHT_TOP_B_END));
-            rtv.put(Zone.C, new SensorValueMapping(Zone.C, RIGHT_TOP_C_START ,RIGHT_TOP_C_END));
+//            rtv.put(Zone.B, new SensorValueMapping(Zone.B, RIGHT_TOP_B_START ,RIGHT_TOP_B_END));
+//            rtv.put(Zone.C, new SensorValueMapping(Zone.C, RIGHT_TOP_C_START ,RIGHT_TOP_C_END));
             RobotSensor rt = new RobotSensor(rtv, this, RobotSensorPlacement.RIGHT_TOP);
             sensors.put(RobotSensorPlacement.RIGHT_TOP, rt);
 
             Map<Zone,SensorValueMapping> rbv = new HashMap<>();
             rbv.put(Zone.A, new SensorValueMapping(Zone.A, RIGHT_BOTTOM_A_START ,RIGHT_BOTTOM_A_END));
-            rbv.put(Zone.B, new SensorValueMapping(Zone.B, RIGHT_BOTTOM_B_START ,RIGHT_BOTTOM_B_END));
-            rbv.put(Zone.C, new SensorValueMapping(Zone.C, RIGHT_BOTTOM_C_START ,RIGHT_BOTTOM_C_END));
+//            rbv.put(Zone.B, new SensorValueMapping(Zone.B, RIGHT_BOTTOM_B_START ,RIGHT_BOTTOM_B_END));
+//            rbv.put(Zone.C, new SensorValueMapping(Zone.C, RIGHT_BOTTOM_C_START ,RIGHT_BOTTOM_C_END));
             RobotSensor rb = new RobotSensor(rbv, this, RobotSensorPlacement.RIGHT_BOTTOM);
             sensors.put(RobotSensorPlacement.RIGHT_BOTTOM, rb);
 
-            Map<Zone,SensorValueMapping> lmv = new HashMap<>();
-            lmv.put(Zone.A, new SensorValueMapping(Zone.A, LEFT_MIDDLE_A_START ,LEFT_MIDDLE_A_END));
-            lmv.put(Zone.B, new SensorValueMapping(Zone.B, LEFT_MIDDLE_B_START ,LEFT_MIDDLE_B_END));
-            lmv.put(Zone.C, new SensorValueMapping(Zone.C, LEFT_MIDDLE_C_START ,LEFT_MIDDLE_C_END));
-            lmv.put(Zone.D, new SensorValueMapping(Zone.D, LEFT_MIDDLE_D_START ,LEFT_MIDDLE_D_END));
-            lmv.put(Zone.E, new SensorValueMapping(Zone.E, LEFT_MIDDLE_E_START ,LEFT_MIDDLE_E_END));
-            lmv.put(Zone.F, new SensorValueMapping(Zone.F, LEFT_MIDDLE_F_START ,LEFT_MIDDLE_F_END));
-            RobotSensor lm = new RobotSensor(lmv, this, RobotSensorPlacement.LEFT_MIDDLE);
-            sensors.put(RobotSensorPlacement.LEFT_MIDDLE, lm);
+//            Map<Zone,SensorValueMapping> lmv = new HashMap<>();
+//            lmv.put(Zone.A, new SensorValueMapping(Zone.A, LEFT_MIDDLE_A_START ,LEFT_MIDDLE_A_END));
+//            lmv.put(Zone.B, new SensorValueMapping(Zone.B, LEFT_MIDDLE_B_START ,LEFT_MIDDLE_B_END));
+//            lmv.put(Zone.C, new SensorValueMapping(Zone.C, LEFT_MIDDLE_C_START ,LEFT_MIDDLE_C_END));
+//            lmv.put(Zone.D, new SensorValueMapping(Zone.D, LEFT_MIDDLE_D_START ,LEFT_MIDDLE_D_END));
+//            lmv.put(Zone.E, new SensorValueMapping(Zone.E, LEFT_MIDDLE_E_START ,LEFT_MIDDLE_E_END));
+//            lmv.put(Zone.F, new SensorValueMapping(Zone.F, LEFT_MIDDLE_F_START ,LEFT_MIDDLE_F_END));
+//            RobotSensor lm = new RobotSensor(lmv, this, RobotSensorPlacement.LEFT_MIDDLE);
+//            sensors.put(RobotSensorPlacement.LEFT_MIDDLE, lm);
 
         }
 
@@ -257,8 +243,11 @@ public class RobotModel{
         sensors.get(RobotSensorPlacement.FRONT_RIGHT).sense(sensorInfoPacket.getFR());
         sensors.get(RobotSensorPlacement.RIGHT_TOP).sense(sensorInfoPacket.getRT());
         sensors.get(RobotSensorPlacement.RIGHT_BOTTOM).sense(sensorInfoPacket.getRB());
+//        sensors.get(RobotSensorPlacement.LEFT_MIDDLE).sense(sensorInfoPacket.getLM());
         System.out.println("---------------------- End of values Mapping------------------------\n");
-        setRobotState(RobotState.READY);
+        if(this.state == RobotState.WAITING){
+            setRobotState(RobotState.READY);
+        }
     }
 
 
@@ -276,6 +265,10 @@ public class RobotModel{
             }
             if(row.getV() == ArenaCellType.BLOCK){
                 System.out.printf("Coord x: %d y:%d is a block!\n", row.getT().getX(), row.getT().getY());
+                ArenaCellModel acm = explored.getCellModelByCoordinates(row.getT());
+                if(acm.arenaCellType == ArenaCellType.EMPTY){
+                    continue;
+                }
                 explored.setCellAsBlock(row.getT());
             }
             else if(row.getV() == ArenaCellType.EMPTY){

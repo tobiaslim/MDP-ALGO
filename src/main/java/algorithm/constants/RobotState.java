@@ -1,5 +1,5 @@
 package algorithm.constants;
 
 public enum RobotState {
-    WAITING, READY
+    WAITING, READY, UNKNOWN
 }
