@@ -187,6 +187,97 @@ public class RobotModel{
         moveDone();
     }
 
+    public void moveWest(){
+        int i = currentDirection.getValue();
+        switch(i){
+            case 3:
+                moveFrontOneStep();
+                break;
+            case 0:
+                turnLeft();
+                moveFrontOneStep();
+                break;
+            case 1:
+                turnLeft();
+                turnLeft();
+                moveFrontOneStep();
+                break;
+            case 2:
+                turnRight();
+                moveFrontOneStep();
+                break;
+        }
+        currentDirection = Direction.value(3);
+    }
+
+    public void moveEast(){
+        int i = currentDirection.getValue();
+        switch(i){
+            case 1:
+                moveFrontOneStep();
+                break;
+            case 0:
+                turnRight();
+                moveFrontOneStep();
+                break;
+            case 3:
+                turnLeft();
+                turnLeft();
+                moveFrontOneStep();
+                break;
+            case 2:
+                turnLeft();
+                moveFrontOneStep();
+                break;
+        }
+        currentDirection = Direction.value(1);
+    }
+
+    public void moveNorth(){
+        int i = currentDirection.getValue();
+        switch(i){
+            case 0:
+                moveFrontOneStep();
+                break;
+            case 1:
+                turnLeft();
+                moveFrontOneStep();
+                break;
+            case 2:
+                turnLeft();
+                turnLeft();
+                moveFrontOneStep();
+                break;
+            case 3:
+                turnRight();
+                moveFrontOneStep();
+                break;
+        }
+        currentDirection = Direction.value(0);
+    }
+    public void moveSouth(){
+        int i = currentDirection.getValue();
+        switch(i){
+            case 2:
+                moveFrontOneStep();
+                break;
+            case 3:
+                turnLeft();
+                moveFrontOneStep();
+                break;
+            case 0:
+                turnLeft();
+                turnLeft();
+                moveFrontOneStep();
+                break;
+            case 1:
+                turnRight();
+                moveFrontOneStep();
+                break;
+        }
+        currentDirection = Direction.value(3);
+    }
+
     /**
      * Method to update subscriber
      */
