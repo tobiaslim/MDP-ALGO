@@ -24,7 +24,6 @@ public class AlgorithmManager implements RobotSubscriber {
     private AlgorithmContract currentAlgo;
     private NetworkService networkService;
     private Thread algoThread;
-    private ArenaCellCoordinate waypoint;
 
 
     public AlgorithmManager(Mode mode, NetworkManager networkManager){
@@ -111,6 +110,6 @@ public class AlgorithmManager implements RobotSubscriber {
     }
 
     public void onWaypoint(WayPointPacket wayPointPacket){
-        this.waypoint = new ArenaCellCoordinate(wayPointPacket.getX(), wayPointPacket.getY());
+        exploredArenaMemory.setWaypoint(new ArenaCellCoordinate(wayPointPacket.getX(), wayPointPacket.getY()));
     }
 }

@@ -33,6 +33,9 @@ public class Cell extends JComponent implements ArenaCellSubscriber {
                 break;
             case EMPTY:
                 color = this.cellModel.isVirtualWall() ? Color.yellow : Color.white;
+                if(cellModel.isWaypoint()){
+                    color = Color.blue;
+                }
                 break;
             case START_ZONE:
                 color = Color.green;

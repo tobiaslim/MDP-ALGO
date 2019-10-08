@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class ArenaMemory implements MDFFormattable {
 
     private List<ArenaCellModel> cells = Collections.synchronizedList(new ArrayList<>());
+    private ArenaCellCoordinate waypoint = null;
 
     public ArenaMemory(){
         int cellsLength = Arena.NO_OF_COLUMNS * Arena.NO_OF_ROWS;
@@ -212,5 +213,13 @@ public class ArenaMemory implements MDFFormattable {
         return cells.stream().filter(acm->acm.getCellStatus() == ArenaCellStatus.EXPLORED).count();
     }
 
-
+    public void setWaypoint(ArenaCellCoordinate waypoint){
+        if(this.waypoint != null){
+            getCellModelByCoordinates(this.waypoint).removeWaypoint();
+        }
+        else{
+            getCellModelByCoordinates(waypoint).setWaypoint();
+            this.waypoint = waypoint;
+        }
+    }
 }

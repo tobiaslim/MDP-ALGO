@@ -10,6 +10,7 @@ public class ArenaCellModel {
     ArenaCellType arenaCellType;
     ArenaCellSubscriber cellSubscriber;
     private boolean isVirtualWall;
+    boolean isWaypoint;
     int index;
 
     public ArenaCellCoordinate getCoordinate() {
@@ -131,5 +132,15 @@ public class ArenaCellModel {
 
     public ArenaCellSubscriber getCellSubscriber() {
         return cellSubscriber;
+    }
+
+    public boolean isWaypoint() {
+        return isWaypoint;
+    }
+    public void setWaypoint() {
+        isWaypoint = true;
+    }
+    public void removeWaypoint() {
+        isWaypoint = false;
     }
 }
