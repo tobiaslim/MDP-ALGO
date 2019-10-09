@@ -32,7 +32,6 @@ public class ExplorationAlgorithm implements AlgorithmContract {
         robotModel.waitForReadyState();
 
         while (!isGoalAchieved() && canPlay()){
-
             if(!subGoalAchieved){
                 //use to detect if robot has passed the goal zone
                 subGoalAchieved = robotModel.getRobotCenter().equals(subgoal);
@@ -40,6 +39,12 @@ public class ExplorationAlgorithm implements AlgorithmContract {
 
             boolean frontEmpty = robotModel.robotFrontSideEmpty();
             boolean rightEmpty = robotModel.robotRightSideEmpty();
+
+            if(robotModel.calibrationCondtion()){
+                robotModel.callibrate();
+                robotModel.waitForReadyState();
+            }
+
             if(rightEmpty){
                 if(wallOnRight){
                     turnRightMoveOne();

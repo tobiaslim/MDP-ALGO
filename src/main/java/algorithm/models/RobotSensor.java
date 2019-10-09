@@ -1,14 +1,12 @@
 package algorithm.models;
 
 import algorithm.ArenaMemory;
-import algorithm.constants.ArenaCellType;
-import algorithm.constants.Direction;
-import algorithm.constants.RobotSensorPlacement;
-import algorithm.constants.Zone;
+import algorithm.constants.*;
 import exception.OutOfGridException;
 import utility.Pair;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -62,7 +60,14 @@ public class RobotSensor {
     public void sense(int sensorValue){
         System.out.printf("***** Start of %s *****\n", placement.toString());
         List<Pair<ArenaCellCoordinate, ArenaCellType>> results = new ArrayList<>();
-
+        /**
+         * This section detects which part of the sensor direct front has a block.
+         * This is achieved by looping through the zones registered for each sensor.
+         * If a zone is found, the zone variable will not be null.
+         * if zone is not found, we will check if it is a short range sensor by checking the sensor placement.
+         * We will then set noOfGrids based on the condition previously to determine how many empty grids are
+         * of the sensor.
+         */
         Zone zone = null;
         for(SensorValueMapping svm : valueMappings.values()){
             if(svm.isValueWithinRange(sensorValue)){
@@ -70,6 +75,7 @@ public class RobotSensor {
             }
         }
 
+        //check if sensor values falls in safe zone
         int noOfGrids = 0;
         if(zone != null){
             //founded the zone
@@ -78,12 +84,24 @@ public class RobotSensor {
         else{
             //no zone found, either exceeds or value before
             if(placement == RobotSensorPlacement.LEFT_MIDDLE){
-                noOfGrids = 0;
+                SensorValueMapping firstSensorMapping = valueMappings.values().iterator().next();
+                if(sensorValue < firstSensorMapping.getStartRange()){
+                    //to cater for the blind zone of long range
+                    noOfGrids = 0;
+                }
+                else{
+                    noOfGrids = 2;
+                }
+
             }
             else{
-                noOfGrids = 2;
+                noOfGrids = 1; //no of safe grids if no zone found
             }
         }
+
+        /**
+         * This section populates all the coordinates that need to be map based on the previous result.
+         */
 
         ArenaCellCoordinate currentSensorCoordinate = getTheCurrentCoordinateOfSensor();
         Direction facingDirection = currentFacingDirection();
@@ -104,7 +122,6 @@ public class RobotSensor {
             Pair<ArenaCellCoordinate, ArenaCellType> p = new Pair<ArenaCellCoordinate, ArenaCellType>();
             p.setT(acc);
             if((i+1) == noOfGrids && zone != null){
-//                System.out.printf("Robot Sensor %s: Setting x: %d y: %d as block\n", placement.toString(),acc.getX(), acc.getY());
                 p.setV(ArenaCellType.BLOCK);
             }
             else{

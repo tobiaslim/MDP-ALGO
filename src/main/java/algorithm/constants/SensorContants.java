@@ -58,8 +58,8 @@ public class SensorContants {
      * CONSTANTS FOR SENSOR READING ACTUAL RUN MODE
      */
 
-    public static final int FRONT_CENTER_A_START                = 7;
-    public static final int FRONT_CENTER_A_END                  = 10;
+    public static final int FRONT_CENTER_A_START                = 6;
+    public static final int FRONT_CENTER_A_END                  = 11;
     public static final int FRONT_CENTER_B_START                = 11;
     public static final int FRONT_CENTER_B_END                  = 20;
     public static final int FRONT_CENTER_C_START                = 21;
@@ -72,7 +72,7 @@ public class SensorContants {
     public static final int FRONT_LEFT_C_START                  = 23;
     public static final int FRONT_LEFT_C_END                    = 30;
 
-    public static final int FRONT_RIGHT_A_START                 = 7;
+    public static final int FRONT_RIGHT_A_START                 = 6;
     public static final int FRONT_RIGHT_A_END                   = 11;
     public static final int FRONT_RIGHT_B_START                 = 12;
     public static final int FRONT_RIGHT_B_END                   = 21;
@@ -80,13 +80,13 @@ public class SensorContants {
     public static final int FRONT_RIGHT_C_END                   = 30;
 
     public static final int RIGHT_TOP_A_START                   = 6; //6
-    public static final int RIGHT_TOP_A_END                     = 12;//12
+    public static final int RIGHT_TOP_A_END                     = 10;//12
     public static final int RIGHT_TOP_B_START                   = 13;//14
     public static final int RIGHT_TOP_B_END                     = 22;//21
     public static final int RIGHT_TOP_C_START                   = 23; //dont map
     public static final int RIGHT_TOP_C_END                     = 25; //dont map
 
-    public static final int RIGHT_BOTTOM_A_START                = 7;//6
+    public static final int RIGHT_BOTTOM_A_START                = 6;//6
     public static final int RIGHT_BOTTOM_A_END                  = 10;//9
     public static final int RIGHT_BOTTOM_B_START                = 11;//11
     public static final int RIGHT_BOTTOM_B_END                  = 21;//19

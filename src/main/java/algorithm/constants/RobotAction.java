@@ -3,7 +3,7 @@ package algorithm.constants;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum  RobotAction {
-    START('S'), TURN_LEFT('L'), TURN_RIGHT('R'), MOVE_STRAIGHT('F'), SENSE('S');
+    START('S'), TURN_LEFT('L'), TURN_RIGHT('R'), MOVE_STRAIGHT('F'), SENSE('S'), CALLIBRATE('C');
 
     private final char value;
 
