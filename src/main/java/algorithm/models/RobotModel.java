@@ -252,7 +252,7 @@ public class RobotModel{
         sensors.get(RobotSensorPlacement.FRONT_RIGHT).sense(sensorInfoPacket.getFR());
         sensors.get(RobotSensorPlacement.RIGHT_TOP).sense(sensorInfoPacket.getRT());
         sensors.get(RobotSensorPlacement.RIGHT_BOTTOM).sense(sensorInfoPacket.getRB());
-//        sensors.get(RobotSensorPlacement.LEFT_MIDDLE).sense(sensorInfoPacket.getLM());
+        sensors.get(RobotSensorPlacement.LEFT_MIDDLE).sense(sensorInfoPacket.getLM());
         System.out.println("---------------------- End of values Mapping------------------------\n");
         if(this.state == RobotState.WAITING){
             setRobotState(RobotState.READY);
@@ -261,7 +261,7 @@ public class RobotModel{
 
 
     /**
-     * This method updates the area memory based on the results provided by the sensors
+     * This method updates the area memory based aaon the results provided by the sensors
      * The results passed into this method should already be describing each coordinate and the cell type.
      *
      * @param results

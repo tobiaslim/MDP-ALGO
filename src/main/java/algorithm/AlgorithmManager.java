@@ -40,6 +40,24 @@ public class AlgorithmManager implements RobotSubscriber {
         algoThread = new Thread(currentAlgo);
         algoThread.setName("exploration runnable");
         algoThread.start();
+
+//        use this to do calibration of sensor
+//        Runnable r = new Runnable() {
+//            @Override
+//            public void run() {
+//                while(true){
+//                    try {
+//                        Thread.sleep(2000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    networkService.sendActionToArduino(RobotAction.START);
+//                    robotModel.waitForReadyState();
+//                }
+//            }
+//        };
+//        Thread t = new Thread(r);
+//        t.start();
     }
 
     public void startFastestPathAlgorithm(){
