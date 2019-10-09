@@ -208,6 +208,7 @@ public class RobotModel{
                 break;
         }
         currentDirection = Direction.value(3);
+        moveDone();
     }
 
     public void moveEast(){
@@ -231,6 +232,7 @@ public class RobotModel{
                 break;
         }
         currentDirection = Direction.value(1);
+        moveDone();
     }
 
     public void moveNorth(){
@@ -254,6 +256,7 @@ public class RobotModel{
                 break;
         }
         currentDirection = Direction.value(0);
+        moveDone();
     }
     public void moveSouth(){
         int i = currentDirection.getValue();
@@ -275,7 +278,8 @@ public class RobotModel{
                 moveFrontOneStep();
                 break;
         }
-        currentDirection = Direction.value(3);
+        currentDirection = Direction.value(2);
+        moveDone();
     }
 
     /**

@@ -85,7 +85,7 @@ public class AStar {
     private void addAdjacentLowerRow(Node currentNode) {
         int row = currentNode.getRow();
         int col = currentNode.getCol();
-        int lowerRow = row + 1;
+        int lowerRow = row - 1;
         if (lowerRow < getSearchArea().length) {
             if (col - 1 >= 0) {
                 checkNode(currentNode, col - 1, lowerRow, getDiagonalCost()); // Comment this line if diagonal movements are not allowed
@@ -112,7 +112,7 @@ public class AStar {
     private void addAdjacentUpperRow(Node currentNode) {
         int row = currentNode.getRow();
         int col = currentNode.getCol();
-        int upperRow = row - 1;
+        int upperRow = row + 1;
         if (upperRow >= 0) {
             if (col - 1 >= 0) {
                 checkNode(currentNode, col - 1, upperRow, getDiagonalCost()); // Comment this if diagonal movements are not allowed
