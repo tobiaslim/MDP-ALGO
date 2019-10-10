@@ -48,6 +48,9 @@ public class Cell extends JComponent implements ArenaCellSubscriber {
         g.fillRect(0, 0, CELL_WIDTH,CELL_HEIGHT);
         g.setColor(Color.blue);
         g.drawString(cellModel.getCellStatus().toString().substring(0, 1), 5, 15);
+        g.setColor(Color.black);
+        g.drawString(cellModel.getCoordinate().getX() + " " + cellModel.getCoordinate().getY(), 3, 25);
+
 
     }
 

@@ -166,12 +166,13 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 catch (InterruptedException e){
                     e.printStackTrace();
                 }
+                
                 robotModel.moveNorth();
                 robotModel.moveWest();
             }
 
             // bottom left
-            else if (node.getCol()+1==curX && node.getRow()+1==curX){
+            else if (node.getCol()+1==curX && node.getRow()+1==curY){
                 robotModel.moveWest();
                 robotModel.moveSouth();
             }
