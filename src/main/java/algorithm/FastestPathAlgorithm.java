@@ -88,6 +88,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
         int curX = robotModel.getRobotCenter().getX();
         int curY = robotModel.getRobotCenter().getY();
         for(Node node : path){
+            
             System.out.println("Moving to:"+ node.getCol()+", "+node.getRow());
             if (node.getRow()==curY && node.getCol()==curX){
             }
@@ -172,6 +173,17 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 robotModel.moveNorth();
                 robotModel.moveWest();
                 robotModel.waitForReadyState();
+            }
+
+            // bottom left
+            else if (node.getCol()+1==curX && node.getRow()+1==curX){
+                robotModel.moveWest();
+                robotModel.moveSouth();
+            }
+            // bottom right
+            else if (node.getCol()+1==curX && node.getRow()-1==curY){
+                robotModel.moveEast();
+                robotModel.moveSouth();
             }
             curX = robotModel.getRobotCenter().getX();
             curY = robotModel.getRobotCenter().getY();
