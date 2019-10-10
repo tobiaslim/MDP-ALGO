@@ -26,7 +26,6 @@ public class FastestPathAlgorithm implements AlgorithmContract {
 
     @Override
     public void run() {
-        while(canPlay()){
             Node initialNode = new Node(start.getY(), start.getX());
             Node finalNode = new Node(goal.getY(), goal.getX());
             int rows = 20;
@@ -82,14 +81,14 @@ public class FastestPathAlgorithm implements AlgorithmContract {
 
             System.out.println("Fastest path started");
             moveRobot(path);
-        }
 
     }
     // Move Robot using a chain of commands
     public void moveRobot(List<Node> path){
-        int curX = 1;
-        int curY = 1;
+        int curX = robotModel.getRobotCenter().getX();
+        int curY = robotModel.getRobotCenter().getY();
         for(Node node : path){
+            System.out.println("Moving to:"+ node.getCol()+", "+node.getRow());
             if (node.getRow()==curY && node.getCol()==curX){
             }
             // same row
@@ -139,7 +138,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 }
             }
             // up right diagonal
-            else if(node.getCol()-1==curX && node.getRow()==curY){
+            else if(node.getCol()-1==curX && node.getRow()-1==curY){
                 try{
                     Thread.sleep(1000);
                 }
@@ -163,7 +162,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 robotModel.waitForReadyState();
             }
             // up left diagonal
-            else if(node.getCol()+1==curX && node.getRow()==curY){
+            else if(node.getCol()+1==curX && node.getRow()-1==curY){
                 try{
                     Thread.sleep(1000);
                 }
@@ -174,8 +173,10 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 robotModel.moveWest();
                 robotModel.waitForReadyState();
             }
-            curX = node.getCol();
-            curY = node.getRow();
+            curX = robotModel.getRobotCenter().getX();
+            curY = robotModel.getRobotCenter().getY();
+            //curX = node.getCol();
+            //curY = node.getRow();
         }
     }
     public synchronized void pauseAlgorithm(){
