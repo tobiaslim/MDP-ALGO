@@ -113,7 +113,7 @@ public class RobotSensor {
         ArenaCellCoordinate currentSensorCoordinate = getTheCurrentCoordinateOfSensor();
         Direction facingDirection = currentFacingDirection();
         Matrix directionMatrix = getDirectionMatrix(facingDirection);
-        System.out.println(facingDirection.toString() + " " + currentSensorCoordinate.getX() + " " + currentSensorCoordinate.getY());
+        System.out.println(placement.toString() + " " + currentSensorCoordinate.getX() + " " + currentSensorCoordinate.getY());
         System.out.println(facingDirection.toString()+" "+directionMatrix.getI() + " " +directionMatrix.getJ());
         Matrix sumMatrix;
 
@@ -358,7 +358,7 @@ public class RobotSensor {
                 acc = new ArenaCellCoordinate(acc.getX(), acc.getY()+1);
                 break;
             case SOUTH:
-                acc = new ArenaCellCoordinate(acc.getX()+1, acc.getY()-1);
+                acc = new ArenaCellCoordinate(acc.getX()+1, acc.getY());
                 break;
             case WEST:
                 acc = new ArenaCellCoordinate(acc.getX(), acc.getY()-1);
