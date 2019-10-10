@@ -128,7 +128,7 @@ public class RobotModel{
             lmv.put(Zone.C, new SensorValueMapping(Zone.C, LEFT_MIDDLE_C_START ,LEFT_MIDDLE_C_END));
             lmv.put(Zone.D, new SensorValueMapping(Zone.D, LEFT_MIDDLE_D_START ,LEFT_MIDDLE_D_END));
             lmv.put(Zone.E, new SensorValueMapping(Zone.E, LEFT_MIDDLE_E_START ,LEFT_MIDDLE_E_END));
-            lmv.put(Zone.F, new SensorValueMapping(Zone.F, LEFT_MIDDLE_F_START ,LEFT_MIDDLE_F_END));
+//            lmv.put(Zone.F, new SensorValueMapping(Zone.F, LEFT_MIDDLE_F_START ,LEFT_MIDDLE_F_END));
             RobotSensor lm = new RobotSensor(lmv, this, RobotSensorPlacement.LEFT_MIDDLE);
             sensors.put(RobotSensorPlacement.LEFT_MIDDLE, lm);
 

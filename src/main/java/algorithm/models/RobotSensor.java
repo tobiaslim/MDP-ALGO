@@ -87,13 +87,16 @@ public class RobotSensor {
                 SensorValueMapping firstSensorMapping = valueMappings.values().iterator().next();
                 SensorValueMapping lastSensorMapping = (SensorValueMapping) valueMappings.values().toArray()[valueMappings.values().size()-1];
                 if(sensorValue < firstSensorMapping.getStartRange()){
-                    //to cater for the blind zone of long range
+                    //to cater for the starting blind zone of long range
                     noOfGrids = 0;
+
                 }
                 else if(sensorValue > firstSensorMapping.getStartRange() && sensorValue < lastSensorMapping.getEndRange()){
-                    noOfGrids = 0;
+                    // falls not between any zone, but assured that first 2 blocks is empty
+                    noOfGrids = 2;
                 }
                 else{
+                    //if exceeds the furthest range
                     noOfGrids = 4;
                 }
 
