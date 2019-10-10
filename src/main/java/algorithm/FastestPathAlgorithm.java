@@ -5,6 +5,7 @@ import algorithm.models.ArenaCellCoordinate;
 import algorithm.models.ArenaCellModel;
 import algorithm.models.RobotModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FastestPathAlgorithm implements AlgorithmContract {
@@ -123,7 +124,6 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                         e.printStackTrace();
                     }
                     robotModel.moveNorth();
-                    robotModel.waitForReadyState();
                 }
                 else if(node.getRow()-curY==-1){
                     try{
@@ -133,7 +133,6 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                         e.printStackTrace();
                     }
                     robotModel.moveSouth();
-                    robotModel.waitForReadyState();
                 }
             }
             // up right diagonal
@@ -169,7 +168,6 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 }
                 robotModel.moveNorth();
                 robotModel.moveWest();
-                robotModel.waitForReadyState();
             }
 
             // bottom left
