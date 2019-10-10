@@ -24,6 +24,7 @@ public class NetworkConnection {
     public void send(String message){
         System.out.println("Client: Sending message: "+ message);
         out.println(message);
+        out.flush();
     }
 
     public void listen(NetworkManager networkManager){

@@ -33,7 +33,7 @@ public class RobotModel{
         this.networkService = networkService;
         robotSubscriberList = new ArrayList<>();
         robotCenter = new ArenaCellCoordinate(1, 1);
-        currentDirection = Direction.NORTH;
+        currentDirection = Direction.SOUTH;
         this.explored = arenaMemory;
         setRobotState(RobotState.READY);
         sensors = new HashMap<>();

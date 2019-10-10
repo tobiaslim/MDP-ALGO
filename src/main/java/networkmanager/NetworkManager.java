@@ -27,6 +27,10 @@ public class NetworkManager {
         subscriberList.add(subscriber);
     }
 
+    public void sendWtf(){
+        networkConnection.send("wtf");
+    }
+
     public void sendPacket(Packet packet) {
         try {
             networkConnection.send(objectMapper.writeValueAsString(packet));

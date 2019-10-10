@@ -61,4 +61,8 @@ public class NetworkService implements NetworkSubscriber {
             System.out.println("Drop packet for waypoint signal");
         }
     }
+
+    public void sendStupid(){
+        networkManager.sendWtf();
+    }
 }

@@ -113,6 +113,8 @@ public class RobotSensor {
         ArenaCellCoordinate currentSensorCoordinate = getTheCurrentCoordinateOfSensor();
         Direction facingDirection = currentFacingDirection();
         Matrix directionMatrix = getDirectionMatrix(facingDirection);
+        System.out.println(facingDirection.toString() + " " + currentSensorCoordinate.getX() + " " + currentSensorCoordinate.getY());
+        System.out.println(facingDirection.toString()+" "+directionMatrix.getI() + " " +directionMatrix.getJ());
         Matrix sumMatrix;
 
         //populating the coordinates that need to be mapped.

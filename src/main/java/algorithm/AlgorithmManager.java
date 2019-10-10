@@ -90,7 +90,12 @@ public class AlgorithmManager implements RobotSubscriber {
         mapAndPos.put("direction", robotModel.getCurrentDirection());
         mapAndPos.put("pos", robotModel.getRobotCenter());
         mapAndPos.put("mdf", new MDFFormat(exploredArenaMemory));
-        networkService.sendPacket(mapAndPos, NetworkRecipient.ANDROID);
+        try{
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //networkService.sendPacket(mapAndPos, NetworkRecipient.ANDROID);
     }
 
     public void onSensorsInformation(SensorInfoPacket sensorInfoPacket){
