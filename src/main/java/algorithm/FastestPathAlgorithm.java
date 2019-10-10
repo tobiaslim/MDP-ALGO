@@ -16,12 +16,13 @@ public class FastestPathAlgorithm implements AlgorithmContract {
     ArenaCellCoordinate subgoal;
     ArenaCellCoordinate start;
 
-    public FastestPathAlgorithm(RobotModel robotModel, ArenaMemory arenaMemory){
+    public FastestPathAlgorithm(RobotModel robotModel, ArenaMemory arenaMemory, ArenaCellCoordinate aCord){
         this.robotModel = robotModel;
         this.arenaMemory = arenaMemory;
         this.resume = true;
 
         start =  new ArenaCellCoordinate(1, 1);
+        subgoal = aCord;
         goal = new ArenaCellCoordinate(13, 18);
     }
 
@@ -71,8 +72,12 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 int x = a.getCoordinate().getX();
                 int y = a.getCoordinate().getY();
                 aStar.setBlock(y,x);
+                aStar.setBlock(y,x+1);
+                aStar.setBlock(y+1, x);
+                aStar.setBlock(y+1,x+1);
                 System.out.println("Unexplored Block set at "+y+", "+x);
             }
+
 
             List<Node> path = aStar.findPath();
             // Print out the fastest path
@@ -81,13 +86,14 @@ public class FastestPathAlgorithm implements AlgorithmContract {
             }
 
             System.out.println("Fastest path started");
-            moveRobot(path);
+            moveRobot(path,aStar);
 
     }
     // Move Robot using a chain of commands
-    public void moveRobot(List<Node> path){
+    public void moveRobot(List<Node> path, AStar aStar){
         int curX = robotModel.getRobotCenter().getX();
         int curY = robotModel.getRobotCenter().getY();
+        Node[][] sa = aStar.getSearchArea();
         for(Node node : path){
 
             System.out.println("Moving to:"+ node.getCol()+", "+node.getRow());
@@ -143,19 +149,25 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 catch (InterruptedException e){
                     e.printStackTrace();
                 }
-                robotModel.moveNorth();
-                try{
-                    Thread.sleep(1000);
+                if(sa[curY+1][curX].isBlock()){
+                    robotModel.moveEast();
+                    try{
+                        Thread.sleep(1000);
+                    }
+                    catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                    robotModel.moveNorth();
                 }
-                catch (InterruptedException e){
-                    e.printStackTrace();
-                }
-                robotModel.moveEast();
-                try{
-                    Thread.sleep(1000);
-                }
-                catch (InterruptedException e){
-                    e.printStackTrace();
+                else{
+                    robotModel.moveNorth();
+                    try{
+                        Thread.sleep(1000);
+                    }
+                    catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                    robotModel.moveEast();
                 }
             }
             // up left diagonal
@@ -166,9 +178,27 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 catch (InterruptedException e){
                     e.printStackTrace();
                 }
-                
-                robotModel.moveNorth();
-                robotModel.moveWest();
+                if(sa[curY+1][curX].isBlock()){
+                    robotModel.moveWest();
+                    try{
+                        Thread.sleep(1000);
+                    }
+                    catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                    robotModel.moveNorth();
+                }
+                else{
+                    robotModel.moveNorth();
+                    try{
+                        Thread.sleep(1000);
+                    }
+                    catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                    robotModel.moveWest();
+                }
+
             }
 
             // bottom left
