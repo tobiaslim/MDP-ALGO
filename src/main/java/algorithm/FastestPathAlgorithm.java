@@ -101,6 +101,8 @@ public class FastestPathAlgorithm implements AlgorithmContract {
         moveRobot(path2,aStar);
         System.out.println("Reached Goal");
 
+        System.out.println(robotModel.getFastestPathString().toString());
+
     }
     // Move Robot using a chain of commands
     public void moveRobot(List<Node> path, AStar aStar){
