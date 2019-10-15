@@ -47,7 +47,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
             int x = a.getCoordinate().getX();
             int y = a.getCoordinate().getY();
             aStar.setBlock(y,x);
-            System.out.println("Block set at "+y+", "+x);
+            System.out.println("Block set at row: "+y+", col: "+x);
         }
 
         // Set Virtual Cells as blocked
@@ -56,21 +56,21 @@ public class FastestPathAlgorithm implements AlgorithmContract {
             int x = a.getCoordinate().getX();
             int y = a.getCoordinate().getY();
             aStar.setBlock(y,x);
-            System.out.println("Virtual Block set at "+y+", "+x);
+            System.out.println("Virtual Block set at row: "+y+", col: "+x);
         }
 
         // Set edges as Virtual Cells. Blocked.
         for(int i=0;i<15;i++){
             aStar.setBlock(0,i);
-            System.out.println("Side Block set at "+0+", "+i);
+            System.out.println("Side Block set at row: "+0+", col: "+i);
             aStar.setBlock(19,i);
-            System.out.println("Side Block set at "+19+", "+i);
+            System.out.println("Side Block set at row: "+19+", col: "+i);
         }
         for(int i=1;i<19;i++){
             aStar.setBlock(i,0);
-            System.out.println("Side Block set at "+i+", "+0);
+            System.out.println("Side Block set at row: "+i+", col: "+0);
             aStar.setBlock(i,14);
-            System.out.println("Side Block set at "+i+", "+14);
+            System.out.println("Side Block set at row: "+i+", col: "+14);
         }
 
         // Set unexplored cells as blocked
@@ -83,7 +83,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
             for(ArenaCellCoordinate avs: surroundings){
                 aStar.setBlock(avs.getY(),avs.getX());
             }
-            System.out.println("Unexplored Block set at "+y+", "+x);
+            System.out.println("Unexplored Block set at row: "+y+", col: "+x);
         }
 
         PriorityQueue<Node> openListTemp = aStar.getOpenList();
@@ -233,6 +233,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 robotModel.moveEast();
                 robotModel.moveSouth();
             }
+            //Uncomment this to move robot within simulation
             //curX = robotModel.getRobotCenter().getX();
             //curY = robotModel.getRobotCenter().getY();
             curX = node.getCol();

@@ -209,7 +209,7 @@ public class AStar {
     private void setDiagonalCost(int diagonalCost) {
         this.diagonalCost = diagonalCost;
     }
-
+    // Clears open list and closed set so that the object is ready for another path
     public void clearLists(){
         openList.clear();
         closedSet.clear();
