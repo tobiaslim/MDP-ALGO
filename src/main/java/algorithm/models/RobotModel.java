@@ -27,7 +27,7 @@ public class RobotModel{
     private RobotSensor virtualRightSensor;
     private Mode mode;
     private NetworkService networkService;
-    private ArrayList<String> fastestPathString = new ArrayList<String>();
+    private ArrayList<RobotAction> fastestPathString = new ArrayList<RobotAction>();
 
     public RobotModel(NetworkService networkService, ArenaMemory arenaMemory, Mode mode){
         this.mode = mode;
@@ -205,8 +205,7 @@ public class RobotModel{
         }
         setLastAction(RobotAction.MOVE_STRAIGHT);
         //String s = "{\"sender\":\"ALGORITHM\",\"recipient\":\"ARDUINO\",\"data\":{\"action\":\"F\"}}";
-        String s = "F";
-        fastestPathString.add(s);
+        fastestPathString.add(RobotAction.MOVE_STRAIGHT);
     }
 
     public void turnLeftString(){
@@ -216,7 +215,7 @@ public class RobotModel{
         setLastAction(RobotAction.TURN_LEFT);
         //String s = "{\"sender\":\"ALGORITHM\",\"recipient\":\"ARDUINO\",\"data\":{\"action\":\"L\"}}";
         String s = "L";
-        fastestPathString.add(s);
+        fastestPathString.add(RobotAction.TURN_LEFT);
     }
 
     public void turnRightString(){
@@ -225,7 +224,7 @@ public class RobotModel{
         setLastAction(RobotAction.TURN_RIGHT);
         //String s = "{\"sender\":\"ALGORITHM\",\"recipient\":\"ARDUINO\",\"data\":{\"action\":\"R\"}}";
         String s ="R";
-        fastestPathString.add(s);
+        fastestPathString.add(RobotAction.TURN_RIGHT);
     } // End of string commands
 
     // Advanced movement
@@ -470,7 +469,7 @@ public class RobotModel{
         notifyAll();
     }
 
-    public ArrayList<String> getFastestPathString() {
+    public ArrayList<RobotAction> getFastestPathString() {
         return fastestPathString;
     }
 }

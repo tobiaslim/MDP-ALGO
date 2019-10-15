@@ -9,6 +9,7 @@ import algorithm.models.RobotModel;
 import networkmanager.NetworkManager;
 import networkmanager.NetworkRecipient;
 import networkmanager.dto.ControlSignalPacket;
+import networkmanager.dto.FastestPathList;
 import networkmanager.dto.SensorInfoPacket;
 import networkmanager.dto.WayPointPacket;
 import simulator.Mode;
@@ -23,6 +24,7 @@ public class AlgorithmManager implements RobotSubscriber {
     private AlgorithmContract currentAlgo;
     private NetworkService networkService;
     private Thread algoThread;
+    private ArenaCellCoordinate waypoint;
 
 
     public AlgorithmManager(Mode mode, NetworkManager networkManager){
@@ -61,10 +63,20 @@ public class AlgorithmManager implements RobotSubscriber {
     }
 
     public void startFastestPathAlgorithm(){
-        waypoint = new ArenaCellCoordinate(4,15);
         algoThread = new Thread(new FastestPathAlgorithm(robotModel, exploredArenaMemory, waypoint));
         algoThread.setName("fastest path runnable");
         algoThread.start();
+        try {
+            algoThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        /*
+            Access robotModel's fastest path string
+         */
+        FastestPathList fpl = new FastestPathList();
+        fpl.setActions(robotModel.getFastestPathString());
+        networkService.sendPacket(fpl, NetworkRecipient.ARDUINO);
     }
 
     public void pauseAlgo(){
@@ -109,5 +121,6 @@ public class AlgorithmManager implements RobotSubscriber {
 
     public void onWaypoint(WayPointPacket wayPointPacket){
         exploredArenaMemory.setWaypoint(new ArenaCellCoordinate(wayPointPacket.getX(), wayPointPacket.getY()));
+        this.waypoint = new ArenaCellCoordinate(wayPointPacket.getX(), wayPointPacket.getY());
     }
 }

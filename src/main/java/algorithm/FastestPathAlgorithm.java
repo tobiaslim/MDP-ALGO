@@ -16,12 +16,14 @@ public class FastestPathAlgorithm implements AlgorithmContract {
     ArenaCellCoordinate goal;
     ArenaCellCoordinate subgoal;
     ArenaCellCoordinate start;
+    int delay;
     
 
     public FastestPathAlgorithm(RobotModel robotModel, ArenaMemory arenaMemory, ArenaCellCoordinate aCord){
         this.robotModel = robotModel;
         this.arenaMemory = arenaMemory;
         this.resume = true;
+        delay = 0;
 
         start =  new ArenaCellCoordinate(1, 1);
         subgoal = aCord;
@@ -102,10 +104,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
         moveRobot(path2,aStar);
         System.out.println("Reached Goal");
 
-        /*
-            Access robotModel's fastest path string
-         */
-        System.out.println(robotModel.getFastestPathString().toString());
+
 
     }
     // Move Robot using a chain of commands
@@ -122,7 +121,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
             else if(node.getRow()==curY && node.getCol()!=curX){
                 if(node.getCol()-curX==1){
                     try{
-                        Thread.sleep(1000);
+                        Thread.sleep(delay);
                     }
                     catch (InterruptedException e){
                         e.printStackTrace();
@@ -131,7 +130,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 }
                 else if (node.getCol()-curX==-1){
                     try{
-                        Thread.sleep(1000);
+                        Thread.sleep(delay);
                     }
                     catch (InterruptedException e){
                         e.printStackTrace();
@@ -143,7 +142,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
             else if(node.getCol()==curX && node.getRow()!=curY){
                 if(node.getRow()-curY==1){
                     try{
-                        Thread.sleep(1000);
+                        Thread.sleep(delay);
                     }
                     catch (InterruptedException e){
                         e.printStackTrace();
@@ -152,7 +151,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 }
                 else if(node.getRow()-curY==-1){
                     try{
-                        Thread.sleep(1000);
+                        Thread.sleep(delay);
                     }
                     catch (InterruptedException e){
                         e.printStackTrace();
@@ -163,7 +162,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
             // up right diagonal
             else if(node.getCol()-1==curX && node.getRow()-1==curY){
                 try{
-                    Thread.sleep(1000);
+                    Thread.sleep(delay);
                 }
                 catch (InterruptedException e){
                     e.printStackTrace();
@@ -171,7 +170,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 if(sa[curY+1][curX].isBlock()){
                     robotModel.moveEast();
                     try{
-                        Thread.sleep(1000);
+                        Thread.sleep(delay);
                     }
                     catch (InterruptedException e){
                         e.printStackTrace();
@@ -181,7 +180,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 else{
                     robotModel.moveNorth();
                     try{
-                        Thread.sleep(1000);
+                        Thread.sleep(delay);
                     }
                     catch (InterruptedException e){
                         e.printStackTrace();
@@ -192,7 +191,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
             // up left diagonal
             else if(node.getCol()+1==curX && node.getRow()-1==curY){
                 try{
-                    Thread.sleep(1000);
+                    Thread.sleep(delay);
                 }
                 catch (InterruptedException e){
                     e.printStackTrace();
@@ -200,7 +199,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 if(sa[curY+1][curX].isBlock()){
                     robotModel.moveWest();
                     try{
-                        Thread.sleep(1000);
+                        Thread.sleep(delay);
                     }
                     catch (InterruptedException e){
                         e.printStackTrace();
@@ -210,7 +209,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 else{
                     robotModel.moveNorth();
                     try{
-                        Thread.sleep(1000);
+                        Thread.sleep(delay);
                     }
                     catch (InterruptedException e){
                         e.printStackTrace();

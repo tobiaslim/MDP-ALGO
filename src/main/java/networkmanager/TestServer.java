@@ -10,6 +10,7 @@ import exception.OutOfGridException;
 import networkmanager.dto.ControlSignalPacket;
 import networkmanager.dto.Packet;
 import networkmanager.dto.SensorInfoPacket;
+import networkmanager.dto.WayPointPacket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -105,6 +106,7 @@ public class TestServer extends Thread{
 
                 /** To simulate bluetooth start command **/
 //                simulateBluetoothStart(out);
+                simulateWayPoint(out);
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(c.getInputStream()));
                 String inputLine;
@@ -358,6 +360,37 @@ public class TestServer extends Thread{
             p.setData(csp);
             try {
                 String test = objectMapper.writeValueAsString(p);
+                out.println(test);
+                out.flush();
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+    }
+
+    public void simulateWayPoint(PrintWriter out){
+        /**
+         * Simulate sending of bluetooth
+         */
+        Runnable r = () -> {
+            WayPointPacket wpp = new WayPointPacket();
+            wpp.setX(10);
+            wpp.setY(10);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            out.flush();
+            Packet p = new Packet();
+            p.setRecipient(NetworkRecipient.ALGORITHM.toString());
+            p.setSender(NetworkRecipient.ANDROID.toString());
+            p.setData(wpp);
+            try {
+                String test = objectMapper.writeValueAsString(p);
+                System.out.println(test);
                 out.println(test);
                 out.flush();
             } catch (JsonProcessingException e) {
