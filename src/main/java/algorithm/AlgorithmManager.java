@@ -61,7 +61,7 @@ public class AlgorithmManager implements RobotSubscriber {
     }
 
     public void startFastestPathAlgorithm(){
-        algoThread = new Thread(new FastestPathAlgorithm());
+        algoThread = new Thread(new FastestPathAlgorithm(robotModel, exploredArenaMemory));
         algoThread.setName("fastest path runnable");
         algoThread.start();
     }

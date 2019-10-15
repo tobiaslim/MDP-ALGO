@@ -63,11 +63,6 @@ public class ExplorationAlgorithm implements AlgorithmContract {
                     robotModel.turnLeft();
                 }
             }
-            try{
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             robotModel.waitForReadyState();
         }
         setBackToNorth();
