@@ -376,8 +376,8 @@ public class TestServer extends Thread{
          */
         Runnable r = () -> {
             WayPointPacket wpp = new WayPointPacket();
-            wpp.setX(10);
-            wpp.setY(10);
+            wpp.setX(4);
+            wpp.setY(15);
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {

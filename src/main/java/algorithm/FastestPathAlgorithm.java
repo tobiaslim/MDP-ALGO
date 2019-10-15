@@ -8,6 +8,8 @@ import simulator.Arena;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 public class FastestPathAlgorithm implements AlgorithmContract {
     RobotModel robotModel;
@@ -84,33 +86,35 @@ public class FastestPathAlgorithm implements AlgorithmContract {
             System.out.println("Unexplored Block set at "+y+", "+x);
         }
 
+        PriorityQueue<Node> openListTemp = aStar.getOpenList();
+        Set<Node> closedSetTemp = aStar.getClosedSet();
 
         List<Node> path = aStar.findPath();
         // Print out the fastest path
         for (Node node : path) {
             System.out.println(node);
         }
-
         System.out.println("Fastest path started");
-        moveRobot(path,aStar);
+        moveRobot(path,aStar, new ArenaCellCoordinate(1,1));
         System.out.println("Reached waypoint");
 
         aStar.setInitialNode(waypointNode);
         aStar.setFinalNode(finalNode);
+        aStar.clearLists();
         List<Node> path2 = aStar.findPath();
         for (Node node : path2) {
             System.out.println(node);
         }
-        moveRobot(path2,aStar);
+        System.out.println("Fastest path 2 started");
+        ArenaCellCoordinate ac = new ArenaCellCoordinate(subgoal.getX(),subgoal.getY());
+        moveRobot(path2,aStar, ac);
         System.out.println("Reached Goal");
-
-
 
     }
     // Move Robot using a chain of commands
-    public void moveRobot(List<Node> path, AStar aStar){
-        int curX = robotModel.getRobotCenter().getX();
-        int curY = robotModel.getRobotCenter().getY();
+    public void moveRobot(List<Node> path, AStar aStar, ArenaCellCoordinate starts){
+        int curX = starts.getX();
+        int curY = starts.getY();
         Node[][] sa = aStar.getSearchArea();
         for(Node node : path){
 
