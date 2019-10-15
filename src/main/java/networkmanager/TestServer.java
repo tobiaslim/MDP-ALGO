@@ -38,7 +38,7 @@ public class TestServer extends Thread{
         simulated = new ArenaMemory();
         simulated.updateArenaWithMDF(mdf);
         currentPosition = new ArenaCellCoordinate(1, 1);
-        currentDirection = Direction.NORTH;
+        currentDirection = Direction.SOUTH;
         this.sensorPlacementSensorValueMapping  = new HashMap<>();
         initializeSensorPlacement();
     }
@@ -46,47 +46,47 @@ public class TestServer extends Thread{
     public void initializeSensorPlacement(){
 
         Map<Zone,SensorValueMapping> fl = new HashMap<>();
-        fl.put(Zone.A, new SensorValueMapping(Zone.A, 7 ,15));
-        fl.put(Zone.B, new SensorValueMapping(Zone.B, 16 ,25));
-        fl.put(Zone.C, new SensorValueMapping(Zone.C, 26 ,36));
+        fl.put(Zone.A, new SensorValueMapping(Zone.A, SensorContants.FRONT_LEFT_A_START , SensorContants.FRONT_LEFT_A_END));
+//        fl.put(Zone.B, new SensorValueMapping(Zone.B, 16 ,25));
+//        fl.put(Zone.C, new SensorValueMapping(Zone.C, 26 ,36));
 
         sensorPlacementSensorValueMapping.put(RobotSensorPlacement.FRONT_LEFT, fl);
 
         Map<Zone,SensorValueMapping> fc = new HashMap<>();
-        fc.put(Zone.A, new SensorValueMapping(Zone.A, 7 ,10));
-        fc.put(Zone.B, new SensorValueMapping(Zone.B, 11 ,20));
-        fc.put(Zone.C, new SensorValueMapping(Zone.C, 21 ,30));
+        fc.put(Zone.A, new SensorValueMapping(Zone.A, SensorContants.FRONT_CENTER_A_START ,SensorContants.FRONT_CENTER_A_END));
+//        fc.put(Zone.B, new SensorValueMapping(Zone.B, 11 ,20));
+//        fc.put(Zone.C, new SensorValueMapping(Zone.C, 21 ,30));
 
         sensorPlacementSensorValueMapping.put(RobotSensorPlacement.FRONT_CENTER, fc);
 
         Map<Zone,SensorValueMapping> fr = new HashMap<>();
-        fr.put(Zone.A, new SensorValueMapping(Zone.A, 7 ,14));
-        fr.put(Zone.B, new SensorValueMapping(Zone.B, 15 ,25));
-        fr.put(Zone.C, new SensorValueMapping(Zone.C, 26 ,35));
+        fr.put(Zone.A, new SensorValueMapping(Zone.A, SensorContants.FRONT_RIGHT_A_START ,SensorContants.FRONT_RIGHT_A_END));
+//        fr.put(Zone.B, new SensorValueMapping(Zone.B, 15 ,25));
+//        fr.put(Zone.C, new SensorValueMapping(Zone.C, 26 ,35));
 
         sensorPlacementSensorValueMapping.put(RobotSensorPlacement.FRONT_RIGHT, fr);
 
         Map<Zone,SensorValueMapping> rt = new HashMap<>();
-        rt.put(Zone.A, new SensorValueMapping(Zone.A, 7 ,13));
-        rt.put(Zone.B, new SensorValueMapping(Zone.B, 14 ,23));
-        rt.put(Zone.C, new SensorValueMapping(Zone.C, 24 ,35));
+        rt.put(Zone.A, new SensorValueMapping(Zone.A, SensorContants.RIGHT_TOP_A_START,SensorContants.RIGHT_TOP_A_END));
+//        rt.put(Zone.B, new SensorValueMapping(Zone.B, 14 ,23));
+//        rt.put(Zone.C, new SensorValueMapping(Zone.C, 24 ,35));
 
         sensorPlacementSensorValueMapping.put(RobotSensorPlacement.RIGHT_TOP, rt);
 
         Map<Zone,SensorValueMapping> rb = new HashMap<>();
-        rb.put(Zone.A, new SensorValueMapping(Zone.A, 7 ,14));
-        rb.put(Zone.B, new SensorValueMapping(Zone.B, 15 ,28));
-        rb.put(Zone.C, new SensorValueMapping(Zone.C, 29 ,43));
+        rb.put(Zone.A, new SensorValueMapping(Zone.A, SensorContants.RIGHT_BOTTOM_A_START ,SensorContants.RIGHT_BOTTOM_A_END));
+//        rb.put(Zone.B, new SensorValueMapping(Zone.B, 15 ,28));
+//        rb.put(Zone.C, new SensorValueMapping(Zone.C, 29 ,43));
 
         sensorPlacementSensorValueMapping.put(RobotSensorPlacement.RIGHT_BOTTOM, rb);
 
         Map<Zone,SensorValueMapping> lm = new HashMap<>();
-        lm.put(Zone.A, new SensorValueMapping(Zone.A, 0 ,20));
-        lm.put(Zone.B, new SensorValueMapping(Zone.B, 21 ,27));
-        lm.put(Zone.C, new SensorValueMapping(Zone.C, 28 ,37));
-        lm.put(Zone.D, new SensorValueMapping(Zone.D, 38 ,47));
-        lm.put(Zone.E, new SensorValueMapping(Zone.E, 48 ,58));
-        lm.put(Zone.F, new SensorValueMapping(Zone.F, 59 ,68));
+        lm.put(Zone.A, new SensorValueMapping(Zone.A, 0 ,10));
+        lm.put(Zone.B, new SensorValueMapping(Zone.B, 11 ,20));
+        lm.put(Zone.C, new SensorValueMapping(Zone.C, SensorContants.LEFT_MIDDLE_C_START ,SensorContants.LEFT_MIDDLE_C_END));
+        lm.put(Zone.D, new SensorValueMapping(Zone.D, SensorContants.LEFT_MIDDLE_D_START ,SensorContants.LEFT_MIDDLE_D_END));
+        lm.put(Zone.E, new SensorValueMapping(Zone.E, SensorContants.LEFT_MIDDLE_E_START ,SensorContants.LEFT_MIDDLE_E_END));
+//        lm.put(Zone.F, new SensorValueMapping(Zone.F, 59 ,68));
 
         sensorPlacementSensorValueMapping.put(RobotSensorPlacement.LEFT_MIDDLE, lm);
 
@@ -227,10 +227,13 @@ public class TestServer extends Thread{
      */
     public SensorValueMapping getSensorValueMapping(RobotSensorPlacement placement,ArenaCellCoordinate sensorCoordinate, Matrix directionMatrix){
         Map<Zone, SensorValueMapping> reference = sensorPlacementSensorValueMapping.get(placement);
+        System.out.printf("Sensor coordinate is x:%d y:%d", sensorCoordinate.getX(), sensorCoordinate.getY());
         for(int i = 0; i  < Zone.values().length; i++){
             try{
+                System.out.println(placement + " getting next zone " + Zone.value(i+1));
                 sensorCoordinate.addMatrixValue(directionMatrix);
             }catch (OutOfGridException e){
+                System.out.println("oog");
                 //out of grid, return current zone
 //                System.out.print(placement.toString() + " detected out of grid assigning latest zone");
                 Zone zone = Zone.value(i+1);
@@ -315,6 +318,9 @@ public class TestServer extends Thread{
         if(svm == null){
             sensorInfoPacket.setLM(100);
         }
+        else if (svm.getZone().getValue() < 3){
+            sensorInfoPacket.setLM(random(0, 23));
+        }
         else{
             sensorInfoPacket.setLM(random(results.get(RobotSensorPlacement.LEFT_MIDDLE).getStartRange(), results.get(RobotSensorPlacement.LEFT_MIDDLE).getEndRange()-results.get(RobotSensorPlacement.LEFT_MIDDLE).getStartRange()));
         }
@@ -364,6 +370,7 @@ public class TestServer extends Thread{
 
 
     private ArenaCellCoordinate getFrontLeftSensor(ArenaCellCoordinate coordinate){
+        System.out.printf("Robot Center is x: %d y: %d",coordinate.getX(), coordinate.getY());
         ArenaCellCoordinate acc = new ArenaCellCoordinate(0, 0);
         switch (currentDirection){
             case NORTH:

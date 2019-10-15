@@ -64,7 +64,7 @@ public class ExplorationAlgorithm implements AlgorithmContract {
                 }
             }
             try{
-                Thread.sleep(200);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -77,11 +77,6 @@ public class ExplorationAlgorithm implements AlgorithmContract {
     public void turnRightMoveOne(){
         robotModel.turnRight();
         robotModel.waitForReadyState();
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         if(robotModel.robotFrontSideEmpty()){
             robotModel.moveFrontOneStep();
         }
