@@ -187,6 +187,8 @@ public class RobotModel{
         setLastAction(RobotAction.TURN_RIGHT);
         moveDone();
     }
+
+    // Update the Arraylist with movement string
     public void moveFrontOneStepString(){
         switch (currentDirection){
             case NORTH:
@@ -202,25 +204,31 @@ public class RobotModel{
                 robotCenter.setX(robotCenter.getX()-1);
         }
         setLastAction(RobotAction.MOVE_STRAIGHT);
-        String s = "{\"sender\":\"ALGORITHM\",\"recipient\":\"ARDUINO\",\"data\":{\"action\":\"F\"}}";
+        //String s = "{\"sender\":\"ALGORITHM\",\"recipient\":\"ARDUINO\",\"data\":{\"action\":\"F\"}}";
+        String s = "F";
         fastestPathString.add(s);
     }
+
     public void turnLeftString(){
         int i = (currentDirection.getValue() - 1) % 4;
         if(i < 0) i += 4;
         currentDirection = Direction.value(i);
         setLastAction(RobotAction.TURN_LEFT);
-        String s = "{\"sender\":\"ALGORITHM\",\"recipient\":\"ARDUINO\",\"data\":{\"action\":\"L\"}}";
+        //String s = "{\"sender\":\"ALGORITHM\",\"recipient\":\"ARDUINO\",\"data\":{\"action\":\"L\"}}";
+        String s = "L";
         fastestPathString.add(s);
     }
+
     public void turnRightString(){
         int i = (currentDirection.getValue() + 1) % 4;
         currentDirection = Direction.value(i);
         setLastAction(RobotAction.TURN_RIGHT);
-        String s = "{\"sender\":\"ALGORITHM\",\"recipient\":\"ARDUINO\",\"data\":{\"action\":\"R\"}}";
+        //String s = "{\"sender\":\"ALGORITHM\",\"recipient\":\"ARDUINO\",\"data\":{\"action\":\"R\"}}";
+        String s ="R";
         fastestPathString.add(s);
-    }
+    } // End of string commands
 
+    // Advanced movement
     public void moveWest(){
         int i = currentDirection.getValue();
         switch(i){
@@ -314,7 +322,7 @@ public class RobotModel{
         }
         //currentDirection = Direction.value(2);
         //moveDone();
-    }
+    } // End of advanced movement
 
     /**
      * Method to update subscriber

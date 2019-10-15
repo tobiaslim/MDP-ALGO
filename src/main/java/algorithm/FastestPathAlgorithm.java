@@ -101,6 +101,9 @@ public class FastestPathAlgorithm implements AlgorithmContract {
         moveRobot(path2,aStar);
         System.out.println("Reached Goal");
 
+        /*
+            Access robotModel's fastest path string
+         */
         System.out.println(robotModel.getFastestPathString().toString());
 
     }
@@ -252,5 +255,9 @@ public class FastestPathAlgorithm implements AlgorithmContract {
     synchronized public void resumeAlgorithm(){
         this.resume = true;
         notifyAll();
+    }
+
+    public RobotModel getRobotModel() {
+        return robotModel;
     }
 }
