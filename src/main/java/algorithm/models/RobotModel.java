@@ -27,6 +27,7 @@ public class RobotModel{
     private RobotSensor virtualRightSensor;
     private Mode mode;
     private NetworkService networkService;
+    private ArrayList<String> fastestPathString = new ArrayList<String>();
 
     public RobotModel(NetworkService networkService, ArenaMemory arenaMemory, Mode mode){
         this.mode = mode;
@@ -187,100 +188,141 @@ public class RobotModel{
         moveDone();
     }
 
+    // Update the Arraylist with movement string
+    public void moveFrontOneStepString(){
+        switch (currentDirection){
+            case NORTH:
+                robotCenter.setY(robotCenter.getY()+1);
+                break;
+            case EAST:
+                robotCenter.setX(robotCenter.getX()+1);
+                break;
+            case SOUTH:
+                robotCenter.setY(robotCenter.getY()-1);
+                break;
+            case WEST:
+                robotCenter.setX(robotCenter.getX()-1);
+        }
+        setLastAction(RobotAction.MOVE_STRAIGHT);
+        //String s = "{\"sender\":\"ALGORITHM\",\"recipient\":\"ARDUINO\",\"data\":{\"action\":\"F\"}}";
+        String s = "F";
+        fastestPathString.add(s);
+    }
+
+    public void turnLeftString(){
+        int i = (currentDirection.getValue() - 1) % 4;
+        if(i < 0) i += 4;
+        currentDirection = Direction.value(i);
+        setLastAction(RobotAction.TURN_LEFT);
+        //String s = "{\"sender\":\"ALGORITHM\",\"recipient\":\"ARDUINO\",\"data\":{\"action\":\"L\"}}";
+        String s = "L";
+        fastestPathString.add(s);
+    }
+
+    public void turnRightString(){
+        int i = (currentDirection.getValue() + 1) % 4;
+        currentDirection = Direction.value(i);
+        setLastAction(RobotAction.TURN_RIGHT);
+        //String s = "{\"sender\":\"ALGORITHM\",\"recipient\":\"ARDUINO\",\"data\":{\"action\":\"R\"}}";
+        String s ="R";
+        fastestPathString.add(s);
+    } // End of string commands
+
+    // Advanced movement
     public void moveWest(){
         int i = currentDirection.getValue();
         switch(i){
             case 3:
-                moveFrontOneStep();
+                moveFrontOneStepString();
                 break;
             case 0:
-                turnLeft();
-                moveFrontOneStep();
+                turnLeftString();
+                moveFrontOneStepString();
                 break;
             case 1:
-                turnLeft();
-                turnLeft();
-                moveFrontOneStep();
+                turnLeftString();
+                turnLeftString();
+                moveFrontOneStepString();
                 break;
             case 2:
-                turnRight();
-                moveFrontOneStep();
+                turnRightString();
+                moveFrontOneStepString();
                 break;
         }
         //currentDirection = Direction.value(3);
-        moveDone();
+        //moveDone();
     }
 
     public void moveEast(){
         int i = currentDirection.getValue();
         switch(i){
             case 1:
-                moveFrontOneStep();
+                moveFrontOneStepString();
                 break;
             case 0:
-                turnRight();
-                moveFrontOneStep();
+                turnRightString();
+                moveFrontOneStepString();
                 break;
             case 3:
-                turnLeft();
-                turnLeft();
-                moveFrontOneStep();
+                turnLeftString();
+                turnLeftString();
+                moveFrontOneStepString();
                 break;
             case 2:
-                turnLeft();
-                moveFrontOneStep();
+                turnLeftString();
+                moveFrontOneStepString();
                 break;
         }
         //currentDirection = Direction.value(1);
-        moveDone();
+        //moveDone();
     }
 
     public void moveNorth(){
         int i = currentDirection.getValue();
         switch(i){
             case 0:
-                moveFrontOneStep();
+                moveFrontOneStepString();
                 break;
             case 1:
-                turnLeft();
-                moveFrontOneStep();
+                turnLeftString();
+                moveFrontOneStepString();
                 break;
             case 2:
-                turnLeft();
-                turnLeft();
-                moveFrontOneStep();
+                turnLeftString();
+                turnLeftString();
+                moveFrontOneStepString();
                 break;
             case 3:
-                turnRight();
-                moveFrontOneStep();
+                turnRightString();
+                moveFrontOneStepString();
                 break;
         }
         //currentDirection = Direction.value(0);
-        moveDone();
+        //moveDone();
     }
     public void moveSouth(){
         int i = currentDirection.getValue();
         switch(i){
             case 2:
-                moveFrontOneStep();
+                moveFrontOneStepString();
                 break;
             case 3:
-                turnLeft();
-                moveFrontOneStep();
+                turnLeftString();
+                moveFrontOneStepString();
                 break;
             case 0:
-                turnLeft();
-                turnLeft();
-                moveFrontOneStep();
+                turnLeftString();
+                turnLeftString();
+                moveFrontOneStepString();
                 break;
             case 1:
-                turnRight();
-                moveFrontOneStep();
+                turnRightString();
+                moveFrontOneStepString();
                 break;
         }
         //currentDirection = Direction.value(2);
-        moveDone();
-    }
+        //moveDone();
+    } // End of advanced movement
 
     /**
      * Set callibrate command
@@ -428,5 +470,8 @@ public class RobotModel{
         notifyAll();
     }
 
+    public ArrayList<String> getFastestPathString() {
+        return fastestPathString;
+    }
 }
 

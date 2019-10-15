@@ -242,4 +242,21 @@ public class ArenaMemory implements MDFFormattable {
         return cells.stream().filter(acm->acm.getCellStatus()== ArenaCellStatus.UNEXPLORED).collect(Collectors.toList());
     }
 
+    public List<ArenaCellCoordinate> getSurroundingCoordinates(ArenaCellCoordinate coordinates) {
+        List<ArenaCellCoordinate> cellCoordinateList = new ArrayList<>();
+
+        for(int i = -1; i < 2; i++){
+            for(int j = -1; j < 2; j++){
+                try{
+                    cellCoordinateList.add(new ArenaCellCoordinate(coordinates.getX()+i, coordinates.getY()+j));
+                }
+                catch (OutOfGridException e){
+//                    System.out.println(e.getDetailedMessage());
+                }
+
+            }
+        }
+        return cellCoordinateList;
+    }
+
 }
