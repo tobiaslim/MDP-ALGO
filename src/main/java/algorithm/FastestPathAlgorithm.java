@@ -16,6 +16,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
     ArenaCellCoordinate goal;
     ArenaCellCoordinate subgoal;
     ArenaCellCoordinate start;
+    
 
     public FastestPathAlgorithm(RobotModel robotModel, ArenaMemory arenaMemory, ArenaCellCoordinate aCord){
         this.robotModel = robotModel;
@@ -229,10 +230,10 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 robotModel.moveEast();
                 robotModel.moveSouth();
             }
-            curX = robotModel.getRobotCenter().getX();
-            curY = robotModel.getRobotCenter().getY();
-            //curX = node.getCol();
-            //curY = node.getRow();
+            //curX = robotModel.getRobotCenter().getX();
+            //curY = robotModel.getRobotCenter().getY();
+            curX = node.getCol();
+            curY = node.getRow();
         }
     }
     public synchronized void pauseAlgorithm(){
