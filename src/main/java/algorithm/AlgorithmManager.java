@@ -77,6 +77,8 @@ public class AlgorithmManager implements RobotSubscriber {
         FastestPathList fpl = new FastestPathList();
         fpl.setActions(robotModel.getFastestPathString());
         networkService.sendPacket(fpl, NetworkRecipient.ARDUINO);
+        // To be changed
+        System.out.println(robotModel.getMininalFPString());
     }
 
     public void pauseAlgo(){

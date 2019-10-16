@@ -472,5 +472,29 @@ public class RobotModel{
     public ArrayList<RobotAction> getFastestPathString() {
         return fastestPathString;
     }
+
+    public ArrayList<String> getMininalFPString(){
+        ArrayList<RobotAction> n1 = new ArrayList<>();
+        ArrayList<String> finalArr = new ArrayList<>();
+        ArrayList<RobotAction> copyPath = new ArrayList<>(fastestPathString);
+
+        while(!copyPath.isEmpty()){
+            RobotAction t = copyPath.remove(0);
+            if(t!=RobotAction.MOVE_STRAIGHT){
+                if(!n1.isEmpty()){
+                    finalArr.add(Integer.toString(n1.size()));
+                    n1.clear();
+                }
+                finalArr.add(Character.toString(t.getValue()));
+            }
+            else{
+                n1.add(t);
+            }
+        }
+        if(!n1.isEmpty()){
+            finalArr.add(Integer.toString(n1.size()));
+        }
+        return finalArr;
+    }
 }
 
