@@ -13,12 +13,12 @@ public class AStar {
     private Node initialNode;
     private Node finalNode;
 
-    public AStar(int rows, int cols, Node initialNode, Node finalNode, int hvCost, int diagonalCost) {
+    public AStar(int y, int x, Node initialNode, Node finalNode, int hvCost, int diagonalCost) {
         this.hvCost = hvCost;
         this.diagonalCost = diagonalCost;
         setInitialNode(initialNode);
         setFinalNode(finalNode);
-        this.searchArea = new Node[rows][cols];
+        this.searchArea = new Node[y][x];
         this.openList = new PriorityQueue<Node>(new Comparator<Node>() {
             @Override
             public int compare(Node node0, Node node1) {
@@ -29,8 +29,8 @@ public class AStar {
         this.closedSet = new HashSet<>();
     }
 
-    public AStar(int rows, int cols, Node initialNode, Node finalNode) {
-        this(rows, cols, initialNode, finalNode, DEFAULT_HV_COST, DEFAULT_DIAGONAL_COST);
+    public AStar(int y, int x, Node initialNode, Node finalNode) {
+        this(y, x, initialNode, finalNode, DEFAULT_HV_COST, DEFAULT_DIAGONAL_COST);
     }
 
     private void setNodes() {
@@ -40,14 +40,6 @@ public class AStar {
                 node.calculateHeuristic(getFinalNode());
                 this.searchArea[i][j] = node;
             }
-        }
-    }
-
-    public void setBlocks(int[][] blocksArray) {
-        for (int i = 0; i < blocksArray.length; i++) {
-            int row = blocksArray[i][0];
-            int col = blocksArray[i][1];
-            setBlock(row, col);
         }
     }
 
@@ -83,37 +75,37 @@ public class AStar {
     }
 
     private void addAdjacentLowerRow(Node currentNode) {
-        int row = currentNode.getRow();
-        int col = currentNode.getCol();
-        int lowerRow = row - 1;
+        int y = currentNode.getY();
+        int x = currentNode.getX();
+        int lowerRow = y - 1;
         if (lowerRow < getSearchArea().length) {
-            checkNode(currentNode, col, lowerRow, getHvCost());
+            checkNode(currentNode, x, lowerRow, getHvCost());
         }
     }
 
     private void addAdjacentMiddleRow(Node currentNode) {
-        int row = currentNode.getRow();
-        int col = currentNode.getCol();
-        int middleRow = row;
-        if (col - 1 >= 0) {
-            checkNode(currentNode, col - 1, middleRow, getHvCost());
+        int y = currentNode.getY();
+        int x = currentNode.getX();
+        int middleRow = y;
+        if (x - 1 >= 0) {
+            checkNode(currentNode, x - 1, middleRow, getHvCost());
         }
-        if (col + 1 < getSearchArea()[0].length) {
-            checkNode(currentNode, col + 1, middleRow, getHvCost());
+        if (x + 1 < getSearchArea()[0].length) {
+            checkNode(currentNode, x + 1, middleRow, getHvCost());
         }
     }
 
     private void addAdjacentUpperRow(Node currentNode) {
-        int row = currentNode.getRow();
-        int col = currentNode.getCol();
-        int upperRow = row + 1;
+        int y = currentNode.getY();
+        int x = currentNode.getX();
+        int upperRow = y + 1;
         if (upperRow >= 0) {
-            checkNode(currentNode, col, upperRow, getHvCost());
+            checkNode(currentNode, x, upperRow, getHvCost());
         }
     }
 
-    private void checkNode(Node currentNode, int col, int row, int cost) {
-        Node adjacentNode = getSearchArea()[row][col];
+    private void checkNode(Node currentNode, int x, int y, int cost) {
+        Node adjacentNode = getSearchArea()[y][x];
         if (!adjacentNode.isBlock() && !getClosedSet().contains(adjacentNode)) {
             if (!getOpenList().contains(adjacentNode)) {
                 adjacentNode.setNodeData(currentNode, cost);

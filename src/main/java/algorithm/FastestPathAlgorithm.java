@@ -4,9 +4,7 @@ import algorithm.contracts.AlgorithmContract;
 import algorithm.models.ArenaCellCoordinate;
 import algorithm.models.ArenaCellModel;
 import algorithm.models.RobotModel;
-import simulator.Arena;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -37,9 +35,9 @@ public class FastestPathAlgorithm implements AlgorithmContract {
         Node initialNode = new Node(start.getY(), start.getX());
         Node waypointNode = new Node(subgoal.getY(), subgoal.getX());
         Node finalNode = new Node(goal.getY(), goal.getX());
-        int rows = 20;
-        int cols = 15;
-        AStar aStar = new AStar(rows, cols, initialNode, waypointNode);
+        int ymax = 20;
+        int xmax = 15;
+        AStar aStar = new AStar(ymax, xmax, initialNode, waypointNode);
 
         // Set obstacle cells
         List<ArenaCellModel> listObstacles = arenaMemory.getAllObstacleCells();
@@ -47,7 +45,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
             int x = a.getCoordinate().getX();
             int y = a.getCoordinate().getY();
             aStar.setBlock(y,x);
-            System.out.println("Block set at row: "+y+", col: "+x);
+            System.out.println("Block set at x: "+x+", y: "+y);
         }
 
         // Set Virtual Cells as blocked
@@ -56,21 +54,21 @@ public class FastestPathAlgorithm implements AlgorithmContract {
             int x = a.getCoordinate().getX();
             int y = a.getCoordinate().getY();
             aStar.setBlock(y,x);
-            System.out.println("Virtual Block set at row: "+y+", col: "+x);
+            System.out.println("Virtual Block set at x: "+x+", y: "+y);
         }
 
         // Set edges as Virtual Cells. Blocked.
         for(int i=0;i<15;i++){
             aStar.setBlock(0,i);
-            System.out.println("Side Block set at row: "+0+", col: "+i);
+            System.out.println("Side Block set at x: "+i+", y: "+0);
             aStar.setBlock(19,i);
-            System.out.println("Side Block set at row: "+19+", col: "+i);
+            System.out.println("Side Block set at x: "+i+", y: "+19);
         }
         for(int i=1;i<19;i++){
             aStar.setBlock(i,0);
-            System.out.println("Side Block set at row: "+i+", col: "+0);
+            System.out.println("Side Block set at x: "+0+", y: "+i);
             aStar.setBlock(i,14);
-            System.out.println("Side Block set at row: "+i+", col: "+14);
+            System.out.println("Side Block set at x: "+14+", y: "+i);
         }
 
         // Set unexplored cells as blocked
@@ -83,7 +81,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
             for(ArenaCellCoordinate avs: surroundings){
                 aStar.setBlock(avs.getY(),avs.getX());
             }
-            System.out.println("Unexplored Block set at row: "+y+", col: "+x);
+            System.out.println("Unexplored Block set at x: "+x+", y: "+y);
         }
 
         PriorityQueue<Node> openListTemp = aStar.getOpenList();
@@ -118,12 +116,12 @@ public class FastestPathAlgorithm implements AlgorithmContract {
         Node[][] sa = aStar.getSearchArea();
         for(Node node : path){
 
-            System.out.println("Moving to:"+ node.getCol()+", "+node.getRow());
-            if (node.getRow()==curY && node.getCol()==curX){
+            System.out.println("Moving to: x:"+ node.getX()+", y:"+node.getY());
+            if (node.getY()==curY && node.getX()==curX){
             }
             // same row
-            else if(node.getRow()==curY && node.getCol()!=curX){
-                if(node.getCol()-curX==1){
+            else if(node.getY()==curY && node.getX()!=curX){
+                if(node.getX()-curX==1){
                     try{
                         Thread.sleep(delay);
                     }
@@ -132,7 +130,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                     }
                     robotModel.moveEast();
                 }
-                else if (node.getCol()-curX==-1){
+                else if (node.getX()-curX==-1){
                     try{
                         Thread.sleep(delay);
                     }
@@ -143,8 +141,8 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 }
             }
             // same column
-            else if(node.getCol()==curX && node.getRow()!=curY){
-                if(node.getRow()-curY==1){
+            else if(node.getX()==curX && node.getY()!=curY){
+                if(node.getY()-curY==1){
                     try{
                         Thread.sleep(delay);
                     }
@@ -153,7 +151,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                     }
                     robotModel.moveNorth();
                 }
-                else if(node.getRow()-curY==-1){
+                else if(node.getY()-curY==-1){
                     try{
                         Thread.sleep(delay);
                     }
@@ -164,7 +162,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 }
             }
             // up right diagonal
-            else if(node.getCol()-1==curX && node.getRow()-1==curY){
+            else if(node.getX()-1==curX && node.getY()-1==curY){
                 try{
                     Thread.sleep(delay);
                 }
@@ -193,7 +191,7 @@ public class FastestPathAlgorithm implements AlgorithmContract {
                 }
             }
             // up left diagonal
-            else if(node.getCol()+1==curX && node.getRow()-1==curY){
+            else if(node.getX()+1==curX && node.getY()-1==curY){
                 try{
                     Thread.sleep(delay);
                 }
@@ -224,20 +222,20 @@ public class FastestPathAlgorithm implements AlgorithmContract {
             }
 
             // bottom left
-            else if (node.getCol()+1==curX && node.getRow()+1==curY){
+            else if (node.getX()+1==curX && node.getY()+1==curY){
                 robotModel.moveWest();
                 robotModel.moveSouth();
             }
             // bottom right
-            else if (node.getCol()+1==curX && node.getRow()-1==curY){
+            else if (node.getX()+1==curX && node.getY()-1==curY){
                 robotModel.moveEast();
                 robotModel.moveSouth();
             }
             //Uncomment this to move robot within simulation
             //curX = robotModel.getRobotCenter().getX();
             //curY = robotModel.getRobotCenter().getY();
-            curX = node.getCol();
-            curY = node.getRow();
+            curX = node.getX();
+            curY = node.getY();
         }
     }
     public synchronized void pauseAlgorithm(){
