@@ -15,7 +15,7 @@ public class Node {
         this.y = y;
         this.x = x;
     }
-
+    // Heuristic can be changed.
     public void calculateHeuristic(Node finalNode) {
         this.h = Math.abs(finalNode.getY() - getY()) + Math.abs(finalNode.getX() - getX());
     }
@@ -42,9 +42,9 @@ public class Node {
     }
 
     @Override
-    public boolean equals(Object arg0) {
-        Node other = (Node) arg0;
-        return this.getY() == other.getY() && this.getX() == other.getX();
+    public boolean equals(Object obj) {
+        Node node2 = (Node) obj;
+        return this.getY() == node2.getY() && this.getX() == node2.getX();
     }
 
     @Override
@@ -52,13 +52,8 @@ public class Node {
         return "{Node x:" + x + ", y:" + y + "}";
     }
 
-    public int getH() {
-        return h;
-    }
 
-    public void setH(int h) {
-        this.h = h;
-    }
+    // Getter and Setter
 
     public int getG() {
         return g;
@@ -76,20 +71,12 @@ public class Node {
         this.f = f;
     }
 
-    public Node getParent() {
-        return parent;
+    public int getH() {
+        return h;
     }
 
-    public void setParent(Node parent) {
-        this.parent = parent;
-    }
-
-    public boolean isBlock() {
-        return isBlock;
-    }
-
-    public void setBlock(boolean isBlock) {
-        this.isBlock = isBlock;
+    public void setH(int h) {
+        this.h = h;
     }
 
     public int getY() {
@@ -106,5 +93,21 @@ public class Node {
 
     public void setX(int x) {
         this.x = x;
+    }
+
+    public boolean isBlock() {
+        return isBlock;
+    }
+
+    public void setBlock(boolean block) {
+        isBlock = block;
+    }
+
+    public Node getParent() {
+        return parent;
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
     }
 }

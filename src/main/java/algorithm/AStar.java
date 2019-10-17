@@ -3,7 +3,7 @@ package algorithm;
 import java.util.*;
 
 public class AStar {
-    private static int DEFAULT_HV_COST = 10; // Horizontal - Vertical Cost
+    private static int DEFAULT_HV_COST = 10;
     private static int DEFAULT_DIAGONAL_COST = 14;
     private int hvCost;
     private int diagonalCost;
@@ -113,8 +113,6 @@ public class AStar {
             } else {
                 boolean changed = adjacentNode.checkBetterPath(currentNode, cost);
                 if (changed) {
-                    // Remove and Add the changed node, so that the PriorityQueue can sort again its
-                    // contents with the modified "finalCost" value of the modified node
                     getOpenList().remove(adjacentNode);
                     getOpenList().add(adjacentNode);
                 }
@@ -136,10 +134,12 @@ public class AStar {
         return openList.size() == 0;
     }
 
+
     public void setBlock(int row, int col) {
         this.searchArea[row][col].setBlock(true);
     }
 
+    // Get and set methods
     public Node getInitialNode() {
         return initialNode;
     }
