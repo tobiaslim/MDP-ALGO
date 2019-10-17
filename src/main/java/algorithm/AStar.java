@@ -3,8 +3,8 @@ package algorithm;
 import java.util.*;
 
 public class AStar {
-    private static int DEFAULT_HV_COST = 10;
-    private static int DEFAULT_DIAGONAL_COST = 14;
+    private static int DEFAULT_HV_COST = 5;
+    private static int DEFAULT_DIAGONAL_COST = 12;
     private int hvCost;
     private int diagonalCost;
     private Node[][] searchArea;
