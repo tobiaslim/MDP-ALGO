@@ -149,19 +149,7 @@ public class RobotModel{
     }
 
     public void moveFrontOneStep(){
-        switch (currentDirection){
-            case NORTH:
-                robotCenter.setY(robotCenter.getY()+1);
-                break;
-            case EAST:
-                robotCenter.setX(robotCenter.getX()+1);
-                break;
-            case SOUTH:
-                robotCenter.setY(robotCenter.getY()-1);
-                break;
-            case WEST:
-                robotCenter.setX(robotCenter.getX()-1);
-        }
+        moveRobotStateFront();
         setLastAction(RobotAction.MOVE_STRAIGHT);
         moveDone();
     }
@@ -188,8 +176,15 @@ public class RobotModel{
         moveDone();
     }
 
-    // Update the Arraylist with movement string
-    public void moveFrontOneStepString(){
+    public void turnRightMoveOneAtomic(){
+        int i = (currentDirection.getValue() + 1) % 4;
+        currentDirection = Direction.value(i);
+        moveRobotStateFront();
+        setLastAction(RobotAction.X_ROUTINE);
+        moveDone();
+    }
+
+    private void moveRobotStateFront() {
         switch (currentDirection){
             case NORTH:
                 robotCenter.setY(robotCenter.getY()+1);
@@ -203,6 +198,11 @@ public class RobotModel{
             case WEST:
                 robotCenter.setX(robotCenter.getX()-1);
         }
+    }
+
+    // Update the Arraylist with movement string
+    public void moveFrontOneStepString(){
+        moveRobotStateFront();
         setLastAction(RobotAction.MOVE_STRAIGHT);
         //String s = "{\"sender\":\"ALGORITHM\",\"recipient\":\"ARDUINO\",\"data\":{\"action\":\"F\"}}";
         fastestPathString.add(RobotAction.MOVE_STRAIGHT);
@@ -323,14 +323,6 @@ public class RobotModel{
         //moveDone();
     } // End of advanced movement
 
-    /**
-     * Set callibrate command
-     */
-    public void callibrate(){
-        setLastAction(RobotAction.CALLIBRATE);
-        moveDone();
-    }
-
 
     /**
      * Method to update subscriber
@@ -402,7 +394,7 @@ public class RobotModel{
      *
      * @param results
      */
-    public void sensorUpdateCallBack(List<Pair<ArenaCellCoordinate, ArenaCellType>> results){
+    public void sensorUpdateCallBack(List<Pair<ArenaCellCoordinate, ArenaCellType>> results, boolean isLeftSensor){
         for (Pair<ArenaCellCoordinate, ArenaCellType> row : results) {
             if(row.getT() == null){
                 //This case is where the sensor try to map a value out of grid. in such case we do not need to map
@@ -411,15 +403,34 @@ public class RobotModel{
             if(row.getV() == ArenaCellType.BLOCK){
                 System.out.printf("Coord x: %d y:%d is a block!\n", row.getT().getX(), row.getT().getY());
                 ArenaCellModel acm = explored.getCellModelByCoordinates(row.getT());
-                if(acm.arenaCellType == ArenaCellType.EMPTY){
+                if(acm.getCellType() == ArenaCellType.END_ZONE || acm.getCellType() == ArenaCellType.START_ZONE){
+                    System.out.printf("Celltype %s almost mapped as block", acm.arenaCellType.toString());
                     continue;
                 }
-                explored.setCellAsBlock(row.getT());
+                if(acm.arenaCellStatus == ArenaCellStatus.UNEXPLORED || acm.isSetByLeftRange()){
+                    explored.setCellAsBlock(row.getT());
+                }
+
+                if(isLeftSensor){
+                    acm.setByLeftRange(true);
+                }
+                else {
+                    acm.setByLeftRange(false);
+                }
             }
             else if(row.getV() == ArenaCellType.EMPTY){
-                if(explored.getCellModelByCoordinates(row.getT()).getCellType() != ArenaCellType.BLOCK){
+                ArenaCellModel acm = explored.getCellModelByCoordinates(row.getT());
+
+                if((acm.getCellStatus() == ArenaCellStatus.UNEXPLORED ||  acm.isSetByLeftRange()) ){
                     System.out.printf("Coord x: %d y:%d is not a block!\n", row.getT().getX(), row.getT().getY());
-                    explored.setCellAsEmpty(row.getT());
+                    explored.setCellAsEmpty(acm);
+                }
+
+                if(isLeftSensor){
+                    acm.setByLeftRange(true);
+                }
+                else {
+                    acm.setByLeftRange(false);
                 }
 
             }

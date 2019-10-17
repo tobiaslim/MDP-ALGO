@@ -40,14 +40,14 @@ public class ExplorationAlgorithm implements AlgorithmContract {
             boolean frontEmpty = robotModel.robotFrontSideEmpty();
             boolean rightEmpty = robotModel.robotRightSideEmpty();
 
-            if(robotModel.calibrationCondtion()){
-                robotModel.callibrate();
-                robotModel.waitForReadyState();
-            }
+//            if(robotModel.calibrationCondtion()){
+//                robotModel.callibrate();
+//                robotModel.waitForReadyState();
+//            }
 
             if(rightEmpty){
                 if(wallOnRight){
-                    turnRightMoveOne();
+                    robotModel.turnRightMoveOneAtomic();
                 }
                 else{
                     robotModel.turnRight();
@@ -69,13 +69,6 @@ public class ExplorationAlgorithm implements AlgorithmContract {
         System.out.println("Goal achieved!");
     }
 
-    public void turnRightMoveOne(){
-        robotModel.turnRight();
-        robotModel.waitForReadyState();
-        if(robotModel.robotFrontSideEmpty()){
-            robotModel.moveFrontOneStep();
-        }
-    }
 
     public void setBackToNorth(){
         while(robotModel.getCurrentDirection() != Direction.NORTH){

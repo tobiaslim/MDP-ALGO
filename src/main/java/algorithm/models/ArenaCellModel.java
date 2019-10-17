@@ -12,6 +12,7 @@ public class ArenaCellModel {
     private boolean isVirtualWall;
     boolean isWaypoint;
     int index;
+    private boolean setByLeftRange;
 
     public ArenaCellCoordinate getCoordinate() {
         return coordinate;
@@ -25,6 +26,7 @@ public class ArenaCellModel {
         this.index = index;
         this.coordinate = calculateCoordinatesByArrayIndex(index);
         this.isVirtualWall = false;
+        this.setByLeftRange = false;
     }
 
     public int getIndex(){
@@ -74,6 +76,13 @@ public class ArenaCellModel {
         this.setCellStatus(ArenaCellStatus.UNEXPLORED);
     }
 
+    public boolean isSetByLeftRange() {
+        return setByLeftRange;
+    }
+
+    public void setByLeftRange(boolean setByLeftRange) {
+        this.setByLeftRange = setByLeftRange;
+    }
 
     /**
      * set cell types

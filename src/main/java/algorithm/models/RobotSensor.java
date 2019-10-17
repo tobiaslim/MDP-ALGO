@@ -138,7 +138,13 @@ public class RobotSensor {
             }
             results.add(p);
         }
-        robotModel.sensorUpdateCallBack(results);
+        if(placement == RobotSensorPlacement.LEFT_MIDDLE){
+            robotModel.sensorUpdateCallBack(results,true);
+        }
+        else {
+            robotModel.sensorUpdateCallBack(results, false);
+        }
+
         System.out.printf("***** End of %s*****\n", placement.toString());
     }
 

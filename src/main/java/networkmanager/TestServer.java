@@ -129,6 +129,9 @@ public class TestServer extends Thread{
                         else if(data.get("action").asText().equals(Character.toString(RobotAction.TURN_RIGHT.getValue()))){
                             turnRight();
                         }
+                        else if(data.get("action").asText().equals(Character.toString(RobotAction.X_ROUTINE.getValue()))){
+                            turnRightGoStraight();
+                        }
                         else{
 //                            System.out.println("Server: unknown action");
                         }
@@ -191,6 +194,11 @@ public class TestServer extends Thread{
     public void turnRight(){
         int i = (currentDirection.getValue() + 1) % 4;
         currentDirection = Direction.value(i);
+    }
+
+    public void turnRightGoStraight(){
+        turnRight();
+        moveFrontOneStep();
     }
 
     public Map<RobotSensorPlacement, SensorValueMapping> getFiveZones(ArenaCellCoordinate coordinate){
