@@ -480,6 +480,11 @@ public class RobotModel{
 
         while(!copyPath.isEmpty()){
             RobotAction t = copyPath.remove(0);
+            // Uncomment this to send only 1-9 values to Arduino
+            /*if(n1.size()==9){
+                finalArr.add(Integer.toString(n1.size()));
+                n1.clear();
+            }*/
             if(t!=RobotAction.MOVE_STRAIGHT){
                 if(!n1.isEmpty()){
                     finalArr.add(Integer.toString(n1.size()));
