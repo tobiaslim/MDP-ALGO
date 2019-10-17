@@ -56,6 +56,8 @@ public class ArenaCellModel {
         this.isVirtualWall = true;
     }
 
+    public void unsetVirtualWall(){this.isVirtualWall = false;}
+
     /**
      * Call to notify subscriber
      */
