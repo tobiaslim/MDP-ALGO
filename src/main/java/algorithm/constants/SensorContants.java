@@ -80,7 +80,7 @@ public class SensorContants {
     public static final int FRONT_RIGHT_C_END                   = 30;
 
     public static final int RIGHT_TOP_A_START                   = 6; //6
-    public static final int RIGHT_TOP_A_END                     = 12;//12
+    public static final int RIGHT_TOP_A_END                     = 13;//12
     public static final int RIGHT_TOP_B_START                   = 13;//14
     public static final int RIGHT_TOP_B_END                     = 22;//21
     public static final int RIGHT_TOP_C_START                   = 23; //dont map

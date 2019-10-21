@@ -7,7 +7,9 @@ public enum  RobotAction {
     TURN_LEFT('L'),
     TURN_RIGHT('R'),
     MOVE_STRAIGHT('F'),
-    X_ROUTINE('X');
+    X_ROUTINE('X'),
+    FASTEST_TURN_LEFT('A'),
+    FASTEST_TURN_RIGHT('D');
 
     private final char value;
 

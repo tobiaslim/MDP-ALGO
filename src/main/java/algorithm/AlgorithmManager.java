@@ -63,6 +63,7 @@ public class AlgorithmManager implements RobotSubscriber {
     }
 
     public void startFastestPathAlgorithm(){
+        exploredArenaMemory.redrawVirtual();
         algoThread = new Thread(new FastestPathAlgorithm(robotModel, exploredArenaMemory, waypoint));
         algoThread.setName("fastest path runnable");
         algoThread.start();
@@ -75,7 +76,7 @@ public class AlgorithmManager implements RobotSubscriber {
             Access robotModel's fastest path string
          */
         FastestPathList fpl = new FastestPathList();
-        fpl.setActions(robotModel.getFastestPathString());
+        fpl.setActions(robotModel.getMininalFPString());
         networkService.sendPacket(fpl, NetworkRecipient.ARDUINO);
         // To be changed
         System.out.println(robotModel.getMininalFPString());
@@ -124,5 +125,6 @@ public class AlgorithmManager implements RobotSubscriber {
     public void onWaypoint(WayPointPacket wayPointPacket){
         exploredArenaMemory.setWaypoint(new ArenaCellCoordinate(wayPointPacket.getX(), wayPointPacket.getY()));
         this.waypoint = new ArenaCellCoordinate(wayPointPacket.getX(), wayPointPacket.getY());
+        System.out.printf("New waypoint setted x:%d y:%d \n", wayPointPacket.getX(), wayPointPacket.getY() );
     }
 }

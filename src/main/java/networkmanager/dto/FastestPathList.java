@@ -5,13 +5,13 @@ import algorithm.constants.RobotAction;
 import java.util.List;
 
 public class FastestPathList {
-    public List<RobotAction> actions;
+    public List<String> actions;
 
-    public void setActions(List<RobotAction> action) {
+    public void setActions(List<String> action) {
         this.actions = action;
     }
 
-    public List<RobotAction> getActions(){
+    public List<String> getActions(){
         return this.actions;
     }
 }

@@ -7,10 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import exception.OutOfGridException;
-import networkmanager.dto.ControlSignalPacket;
-import networkmanager.dto.Packet;
-import networkmanager.dto.SensorInfoPacket;
-import networkmanager.dto.WayPointPacket;
+import networkmanager.dto.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -385,7 +382,7 @@ public class TestServer extends Thread{
         Runnable r = () -> {
             WayPointPacket wpp = new WayPointPacket();
             wpp.setX(4);
-            wpp.setY(15);
+            wpp.setX(15);
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {

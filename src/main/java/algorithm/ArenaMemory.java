@@ -259,7 +259,7 @@ public class ArenaMemory implements MDFFormattable {
         return cellCoordinateList;
     }
 
-    private void redrawVirtual(){
+    public void redrawVirtual(){
         List<ArenaCellModel> la = getAllVirtualWall();
         for(ArenaCellModel a:la){
             a.unsetVirtualWall();

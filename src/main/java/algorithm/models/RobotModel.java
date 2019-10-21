@@ -215,7 +215,7 @@ public class RobotModel{
         setLastAction(RobotAction.TURN_LEFT);
         //String s = "{\"sender\":\"ALGORITHM\",\"recipient\":\"ARDUINO\",\"data\":{\"action\":\"L\"}}";
         String s = "L";
-        fastestPathString.add(RobotAction.TURN_LEFT);
+        fastestPathString.add(RobotAction.FASTEST_TURN_LEFT);
     }
 
     public void turnRightString(){
@@ -224,7 +224,7 @@ public class RobotModel{
         setLastAction(RobotAction.TURN_RIGHT);
         //String s = "{\"sender\":\"ALGORITHM\",\"recipient\":\"ARDUINO\",\"data\":{\"action\":\"R\"}}";
         String s ="R";
-        fastestPathString.add(RobotAction.TURN_RIGHT);
+        fastestPathString.add(RobotAction.FASTEST_TURN_RIGHT);
     } // End of string commands
 
     // Advanced movement
@@ -492,10 +492,10 @@ public class RobotModel{
         while(!copyPath.isEmpty()){
             RobotAction t = copyPath.remove(0);
             // Uncomment this to send only 1-9 values to Arduino
-            /*if(n1.size()==9){
+            if(n1.size()==9){
                 finalArr.add(Integer.toString(n1.size()));
                 n1.clear();
-            }*/
+            }
             if(t!=RobotAction.MOVE_STRAIGHT){
                 if(!n1.isEmpty()){
                     finalArr.add(Integer.toString(n1.size()));
