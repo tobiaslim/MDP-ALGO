@@ -51,6 +51,8 @@ public class NetworkManager {
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+        } catch (IllegalArgumentException e){
+            e.printStackTrace();
         }
 
     }

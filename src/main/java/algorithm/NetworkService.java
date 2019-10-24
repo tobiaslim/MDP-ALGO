@@ -1,6 +1,7 @@
 package algorithm;
 
 import algorithm.constants.RobotAction;
+import algorithm.models.ArenaCellCoordinate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import networkmanager.NetworkManager;
 import networkmanager.NetworkRecipient;
@@ -31,6 +32,14 @@ public class NetworkService implements NetworkSubscriber {
     public void sendActionToArduino(RobotAction action){
         ActionDataPacket data = new ActionDataPacket();
         data.setAction(action);
+        sendPacket(data, NetworkRecipient.ARDUINO);
+    }
+
+    public void sendActionToArduino(RobotAction action, ArenaCellCoordinate photoGrid){
+        ActionDataPacket data = new ActionDataPacket();
+        data.setAction(action);
+        data.setGrid(photoGrid);
+        data.setPhoto(true);
         sendPacket(data, NetworkRecipient.ARDUINO);
     }
 

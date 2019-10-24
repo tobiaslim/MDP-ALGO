@@ -36,6 +36,12 @@ public class RobotSensor {
         this.valueMappings = mappings;
     }
 
+    public ArenaCellCoordinate getCurrentDetectingCoordinate(){
+        ArenaCellCoordinate acc = getTheCurrentCoordinateOfSensor();
+        Matrix directionMatrix = getDirectionMatrix(currentFacingDirection());
+        return acc.addMatrixValue(directionMatrix);
+    }
+
     public boolean isDirectFrontEmpty(ArenaMemory map){
         ArenaCellCoordinate acc = getTheCurrentCoordinateOfSensor();
         Matrix directionMatrix = getDirectionMatrix(currentFacingDirection());

@@ -463,6 +463,15 @@ public class RobotModel{
         return rightBot.isDirectFrontEmpty(explored) && rightTop.isDirectFrontEmpty(explored) && virtualRightSensor.isDirectFrontEmpty(explored);
     }
 
+    public boolean robotFrontCenterEmpty(){
+        RobotSensor frontCenter = sensors.get(RobotSensorPlacement.FRONT_CENTER);
+        return frontCenter.isDirectFrontEmpty(explored);
+    }
+
+    public ArenaCellCoordinate getCoordinateOfCurrentDetection(RobotSensorPlacement robotSensorPlacement){
+        RobotSensor sensor = sensors.get(robotSensorPlacement);
+        return sensor.getCurrentDetectingCoordinate();
+    }
 
     public synchronized void waitForReadyState()  {
         while(this.state != RobotState.READY){

@@ -80,7 +80,7 @@ public class TestServer extends Thread{
 
         Map<Zone,SensorValueMapping> lm = new HashMap<>();
         lm.put(Zone.A, new SensorValueMapping(Zone.A, 0 ,10));
-        lm.put(Zone.B, new SensorValueMapping(Zone.B, 11 ,20));
+        lm.put(Zone.B, new SensorValueMapping(Zone.B, 11 ,22));
         lm.put(Zone.C, new SensorValueMapping(Zone.C, SensorContants.LEFT_MIDDLE_C_START ,SensorContants.LEFT_MIDDLE_C_END));
         lm.put(Zone.D, new SensorValueMapping(Zone.D, SensorContants.LEFT_MIDDLE_D_START ,SensorContants.LEFT_MIDDLE_D_END));
         lm.put(Zone.E, new SensorValueMapping(Zone.E, SensorContants.LEFT_MIDDLE_E_START ,SensorContants.LEFT_MIDDLE_E_END));
@@ -255,7 +255,7 @@ public class TestServer extends Thread{
             }
 
             if(simulated.getCellModelByCoordinates(sensorCoordinate).getCellType() == ArenaCellType.BLOCK){
-//                System.out.println(placement.toString() + " detected block at " + sensorCoordinate.getX() + " " + sensorCoordinate.getY());
+                System.out.printf("Server: found block at x:%d, y:%d\n", sensorCoordinate.getX(), sensorCoordinate.getY());
                 Zone zone = Zone.value(i+1);
                 if(zone == null){
                     return null;
@@ -392,6 +392,8 @@ public class TestServer extends Thread{
             Packet p = new Packet();
             p.setRecipient(NetworkRecipient.ALGORITHM.toString());
             p.setSender(NetworkRecipient.ANDROID.toString());
+            wpp.setY(10);
+            wpp.setX(5);
             p.setData(wpp);
             try {
                 String test = objectMapper.writeValueAsString(p);
@@ -534,7 +536,7 @@ public class TestServer extends Thread{
                 acc = new ArenaCellCoordinate(coordinate.getX(), coordinate.getY()+1);
                 break;
             case SOUTH:
-                acc = new ArenaCellCoordinate(coordinate.getX()+1, coordinate.getY()-1);
+                acc = new ArenaCellCoordinate(coordinate.getX()+1, coordinate.getY());
                 break;
             case WEST:
                 acc = new ArenaCellCoordinate(coordinate.getX(), coordinate.getY()-1);
