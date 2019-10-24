@@ -1,9 +1,11 @@
 package algorithm;
 
 import algorithm.constants.Direction;
+import algorithm.constants.RobotSensorPlacement;
 import algorithm.contracts.AlgorithmContract;
 import algorithm.models.ArenaCellCoordinate;
 import algorithm.models.RobotModel;
+import exception.OutOfGridException;
 
 public class ExplorationAlgorithm implements AlgorithmContract {
     RobotModel robotModel;
@@ -14,6 +16,8 @@ public class ExplorationAlgorithm implements AlgorithmContract {
     ArenaCellCoordinate goal;
     ArenaCellCoordinate subgoal;
     ArenaCellCoordinate start;
+    private boolean rightWallEmptyFlag;
+    private ArenaCellCoordinate imageGrid;
 
     public ExplorationAlgorithm(RobotModel robotModel, ArenaMemory arenaMemory){
         this.robotModel = robotModel;
@@ -26,6 +30,14 @@ public class ExplorationAlgorithm implements AlgorithmContract {
         goal = new ArenaCellCoordinate(1, 1);
     }
 
+    public boolean isRightWallEmptyFlag() {
+        return rightWallEmptyFlag;
+    }
+
+    public ArenaCellCoordinate getImageGrid() {
+        return imageGrid;
+    }
+
     @Override
     public void run() {
         robotModel.startRobot();
@@ -35,10 +47,19 @@ public class ExplorationAlgorithm implements AlgorithmContract {
             if(!subGoalAchieved){
                 //use to detect if robot has passed the goal zone
                 subGoalAchieved = robotModel.getRobotCenter().equals(subgoal);
-            }
+             }
 
             boolean frontEmpty = robotModel.robotFrontSideEmpty();
             boolean rightEmpty = robotModel.robotRightSideEmpty();
+            this.rightWallEmptyFlag = robotModel.rightMiddleEmpty();
+            if(!this.rightWallEmptyFlag){
+                try{
+                    this.imageGrid = robotModel.getCoordinateOfCurrentDetection(RobotSensorPlacement.RIGHT_MIDDLE);
+                }
+                catch (OutOfGridException e){
+                    this.imageGrid = null;
+                }
+            }
 
 //            if(robotModel.calibrationCondtion()){
 //                robotModel.callibrate();

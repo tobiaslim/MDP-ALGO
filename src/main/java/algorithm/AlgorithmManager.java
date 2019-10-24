@@ -1,13 +1,11 @@
 package algorithm;
 
 import algorithm.constants.RobotAction;
-import algorithm.constants.RobotSensorPlacement;
 import algorithm.contracts.AlgorithmContract;
 import algorithm.contracts.RobotSubscriber;
 import algorithm.models.ArenaCellCoordinate;
 import algorithm.models.MDFFormat;
 import algorithm.models.RobotModel;
-import exception.OutOfGridException;
 import networkmanager.NetworkManager;
 import networkmanager.NetworkRecipient;
 import networkmanager.dto.ControlSignalPacket;
@@ -103,13 +101,13 @@ public class AlgorithmManager implements RobotSubscriber {
     @Override
     public void onMove() {
         RobotAction action = robotModel.getLastAction();
-        if(!robotModel.robotFrontCenterEmpty()){
-            try{
-                networkService.sendActionToArduino(action, robotModel.getCoordinateOfCurrentDetection(RobotSensorPlacement.FRONT_CENTER));
-            }
-            catch (OutOfGridException e){
-                //if side walls detected
+        ExplorationAlgorithm ea = (ExplorationAlgorithm) currentAlgo;
+        if(!ea.isRightWallEmptyFlag()){
+            if(ea.getImageGrid() == null){
                 networkService.sendActionToArduino(action);
+            }
+            else {
+                networkService.sendActionToArduino(action, ea.getImageGrid());
             }
 
         }

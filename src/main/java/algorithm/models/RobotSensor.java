@@ -38,8 +38,11 @@ public class RobotSensor {
 
     public ArenaCellCoordinate getCurrentDetectingCoordinate(){
         ArenaCellCoordinate acc = getTheCurrentCoordinateOfSensor();
+        System.out.printf("Current coordinates of sensor %d %d\n", acc.getX(), acc.getY());
         Matrix directionMatrix = getDirectionMatrix(currentFacingDirection());
-        return acc.addMatrixValue(directionMatrix);
+        acc.addMatrixValue(directionMatrix);
+        System.out.printf("Current coordinates of detected %d %d\n", acc.getX(), acc.getY());
+        return acc;
     }
 
     public boolean isDirectFrontEmpty(ArenaMemory map){
