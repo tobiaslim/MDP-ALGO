@@ -39,29 +39,26 @@ public class AlgorithmManager implements RobotSubscriber {
     }
 
     public void startExplorationAlgorithm(){
-        this.currentAlgo = new ExplorationAlgorithm(robotModel, exploredArenaMemory);
-        exploredArenaMemory.setSurroundingAsVirtualWalls();
-        algoThread = new Thread(currentAlgo);
-        algoThread.setName("exploration runnable");
-        algoThread.start();
+//        this.currentAlgo = new ExplorationAlgorithm(robotModel, exploredArenaMemory);
+//        exploredArenaMemory.setSurroundingAsVirtualWalls();
+//        algoThread = new Thread(currentAlgo);
+//        algoThread.setName("exploration runnable");
+//        algoThread.start();
 
 //        use this to do calibration of sensor
-//        Runnable r = new Runnable() {
-//            @Override
-//            public void run() {
-//                while(true){
-//                    try {
-//                        Thread.sleep(2000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                    networkService.sendActionToArduino(RobotAction.START);
-//                    robotModel.waitForReadyState();
-//                }
+        Runnable r = () -> {
+//            while(true){
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                networkService.sendActionToArduino(RobotAction.START, new ArenaCellCoordinate(5, 5));
+//                robotModel.waitForReadyState();
 //            }
-//        };
-//        Thread t = new Thread(r);
-//        t.start();
+        };
+        Thread t = new Thread(r);
+        t.start();
     }
 
     public void startFastestPathAlgorithm(){
